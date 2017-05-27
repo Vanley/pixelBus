@@ -12,19 +12,15 @@ import java.util.ArrayList;
  * Created by vanley on 21/05/2017.
  */
 public class CityMap extends JPanel {
-
-
     private int cityX;
     private int cityY;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
-
     private String cityLevel = CityLevels.cityLevel1;
 
     public CityMap() {
-
         setFocusable(true);
-        initCity();
+        buildMapTiles();
     }
 
     public int getCityX() {
@@ -35,13 +31,12 @@ public class CityMap extends JPanel {
         return this.cityY;
     }
 
-    public final void initCity() {
+    public final void buildMapTiles() {
         int tileSize = Tile.getTileSize();
         int x = tileSize;
         int y = tileSize;
 
         TileRoad tileRoad;
-
 
         for (int i = 0; i < cityLevel.length(); i++) {
 
@@ -66,35 +61,29 @@ public class CityMap extends JPanel {
         }
 
         cityX += tileSize;
-        cityY += tileSize * 2;
+        cityY += tileSize;
     }
-
-
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         buildCity(g);
+        buildStatistic(g);
     }
 
-    public void buildCity(Graphics g) {
+    private void buildStatistic(Graphics g) {
+            g.setColor(new Color(0, 0, 0));
+            g.drawString("Label:", 25, 20);
+    }
 
+    private void buildCity(Graphics g) {
         g.setColor(new Color(149, 250, 80));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        for (int i = 0; i < tiles.size(); i++) {
-
-            Tile item = (Tile) tiles.get(i);
-
-            if (item instanceof Tile) {
-                  g.drawImage(item.getImage(), item.x(), item.y(), this);
+        for (Tile tile : tiles) {
+            if (tile != null) {
+                g.drawImage(tile.getImage(), tile.x(), tile.y(), this);
             }
-
-
-            g.setColor(new Color(0, 0, 0));
-            g.drawString("Label:", 25, 20);
-
-
         }
     }
 

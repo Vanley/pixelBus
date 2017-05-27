@@ -9,25 +9,31 @@ import java.awt.*;
 public class PixelBusGUI {
     private JPanel mainWindow;
     private JPanel panelMap;
-//    private static CityMap cityMap = ;
+    private JTabbedPane tabbedPane1;
+    private JRadioButton radioButton1;
+    private static CityMap cityMap = new CityMap();
 
     public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new MainFrame());
+    }
 
-        JFrame frame = new JFrame("PIXEL BUS");
-        frame.setContentPane(new PixelBusGUI().mainWindow);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setTitle("PIXEL BUS");
-        frame.pack();
-        frame.setVisible(true);
+    static class MainFrame implements Runnable {
+        @Override
+        public void run() {
+            JFrame frame = new JFrame("PIXEL BUS");
+            frame.setContentPane(new PixelBusGUI().mainWindow);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.setTitle("PIXEL BUS");
+            frame.pack();
+            frame.setVisible(true);
+        }
     }
 
     private void createUIComponents() {
-        CityMap cityMap = new CityMap();
         panelMap = cityMap;
         panelMap.setMinimumSize( new Dimension(cityMap.getCityX(), cityMap.getCityY()));
         panelMap.setMaximumSize( new Dimension(cityMap.getCityX(), cityMap.getCityY()));
-//        panelMap.setSize();
         // TODO: place custom component creation code here
     }
 }
