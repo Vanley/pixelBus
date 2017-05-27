@@ -3,7 +3,7 @@ package pixel.bus.model;
 /**
  * Created by vanley on 21/05/2017.
  */
-public enum TransportUnitEnum {
+public enum VehicleEnum {
     MOTORBIKE("Motorbike", 60, 1, 20, 1, 0),
     CAR("Car", 50, 3, 100, 2, 1),
     VAN("Van", 40, 5, 300, 3, 1),
@@ -20,12 +20,12 @@ public enum TransportUnitEnum {
     final private int runningCost;
     final private int standingCost;
 
-    private TransportUnitEnum(String name,
-                              int speed,
-                              int capacity,
-                              int initialPrice,
-                              int runningCost,
-                              int standingCost) {
+    private VehicleEnum(String name,
+                        int speed,
+                        int capacity,
+                        int initialPrice,
+                        int runningCost,
+                        int standingCost) {
 
         this.name = name;
         this.speed = speed;

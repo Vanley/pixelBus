@@ -1,12 +1,11 @@
 package pixel.bus.model;
 
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * Created by vanley on 21/05/2017.
  */
-public class Tile {
+public abstract class Tile {
 
     private static final int TILE_SIZE = 32;
 
