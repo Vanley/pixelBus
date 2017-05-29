@@ -20,12 +20,12 @@ public enum VehicleEnum {
     final private int runningCost;
     final private int standingCost;
 
-    private VehicleEnum(String name,
-                        int speed,
-                        int capacity,
-                        int initialPrice,
-                        int runningCost,
-                        int standingCost) {
+    VehicleEnum(String name,
+                int speed,
+                int capacity,
+                int initialPrice,
+                int runningCost,
+                int standingCost) {
 
         this.name = name;
         this.speed = speed;

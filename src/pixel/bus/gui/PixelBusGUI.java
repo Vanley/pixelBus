@@ -1,5 +1,7 @@
 package pixel.bus.gui;
 
+import pixel.bus.engine.GameEngine;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,10 +13,15 @@ public class PixelBusGUI {
     private JPanel panelMap;
     private JTabbedPane tabbedPane1;
     private JRadioButton radioButton1;
+
+    private static GameEngine gameEngine = new GameEngine();
     private static CityMap cityMap = new CityMap();
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new MainFrame());
+
+        EventQueue.invokeLater(gameEngine);
+        gameEngine.unPause();
     }
 
     static class MainFrame implements Runnable {
