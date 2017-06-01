@@ -1,5 +1,7 @@
 package pixel.bus.model;
 
+import java.awt.*;
+
 /**
  * Created by vanley on 21/05/2017.
  */
@@ -9,5 +11,10 @@ public class TileRoad extends Tile {
     public TileRoad(int x, int y) {
         super(x, y);
         this.setImage(imageLocation);
+    }
+
+    @Override
+    public void animate(Graphics g) {
+
     }
 }

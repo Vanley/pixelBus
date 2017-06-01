@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import static pixel.bus.model.Station.queuePassengers;
 
 /**
- * Created by vanley on 29/05/2017.
+ * Created by vanley on 02/06/2017.
  */
-public class GameEngineActionListener implements ActionListener {
+public class GameEnginePassengerActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-         System.out.println("Hello Game World Timer");
+        queuePassengers();
     }
 }

@@ -34,8 +34,6 @@ public class City {
         int x = tileSize;
         int y = tileSize;
 
-        TileRoad tileRoad;
-
         for (int i = 0; i < cityLevel.length(); i++) {
 
             char item = cityLevel.charAt(i);
@@ -45,16 +43,16 @@ public class City {
                 if (this.cityX < x) {
                     this.cityX = x;
                 }
-
                 x = tileSize;
             } else if (item == '-') {
-                tileRoad = new TileRoad(x, y);
-                tiles.add(tileRoad);
+                tiles.add(new TileRoad(x, y));
+                x += tileSize;
+            } else if (item == 's') {
+                tiles.add(new TileStation(x, y));
                 x += tileSize;
             } else if (item == ' ') {
                 x += tileSize;
             }
-
             cityY = y;
         }
 

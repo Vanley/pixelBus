@@ -39,6 +39,7 @@ public class MapPanel extends JPanel {
         for (Tile tile : city.getTiles()) {
             if (tile != null) {
                 g.drawImage(tile.getImage(), tile.x(), tile.y(), this);
+                tile.animate(g);
             }
         }
     }

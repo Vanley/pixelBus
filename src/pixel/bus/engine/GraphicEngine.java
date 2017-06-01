@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class GraphicEngine implements Runnable {
 
-    private static int FREQUENCY = 1000/23;
+    private static int FREQUENCY = 1000/10;
 
     private MapPanel mapPanel;
 
@@ -17,7 +17,7 @@ public class GraphicEngine implements Runnable {
 
     public GraphicEngine(MapPanel mapPanel){
         this.mapPanel = mapPanel;
-        timer = new Timer(FREQUENCY, new GraphicEngineActionListener());
+        timer = new Timer(FREQUENCY, new GraphicEngineActionListener(mapPanel));
     }
 
     public void run() {
