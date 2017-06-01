@@ -1,25 +1,19 @@
-package pixel.bus.gui;
+package pixel.bus.model;
 
-import pixel.bus.model.CityLevels;
-import pixel.bus.model.Tile;
-import pixel.bus.model.TileRoad;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Created by vanley on 21/05/2017.
+ * Created by vanley on 31/05/2017.
  */
-public class CityMap extends JPanel {
+public class City {
     private int cityX;
     private int cityY;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
-    private String cityLevel = CityLevels.cityLevel1;
+    private String cityLevel;
 
-    public CityMap() {
-        setFocusable(true);
+    public City(String cityLevel) {
+        this.cityLevel = cityLevel;
         buildMapTiles();
     }
 
@@ -29,6 +23,10 @@ public class CityMap extends JPanel {
 
     public int getCityY() {
         return this.cityY;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 
     public final void buildMapTiles() {
@@ -63,28 +61,4 @@ public class CityMap extends JPanel {
         cityX += tileSize;
         cityY += tileSize;
     }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        buildCity(g);
-        buildStatistic(g);
-    }
-
-    private void buildStatistic(Graphics g) {
-            g.setColor(new Color(0, 0, 0));
-            g.drawString("Label:", 25, 20);
-    }
-
-    private void buildCity(Graphics g) {
-        g.setColor(new Color(149, 250, 80));
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
-        for (Tile tile : tiles) {
-            if (tile != null) {
-                g.drawImage(tile.getImage(), tile.x(), tile.y(), this);
-            }
-        }
-    }
-
 }

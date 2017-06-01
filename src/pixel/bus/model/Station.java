@@ -7,7 +7,7 @@ import java.util.Queue;
  */
 public class Station {
     private String name;
-    private Queue<Passanger> passangerQueue;
+    private Queue<Passenger> passengerQueue;
 
     private int capacityCurrent;
 
