@@ -1,6 +1,7 @@
 package pixel.bus.engine;
 
 import pixel.bus.gui.MapPanel;
+import pixel.bus.gui.MenuBus;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,14 +11,16 @@ import java.awt.event.ActionListener;
  */
 public class GraphicEngineActionListener implements ActionListener {
     private MapPanel mapPanel;
-
-    public GraphicEngineActionListener(MapPanel mapPanel) {
+    private MenuBus menuBus;
+    public GraphicEngineActionListener(MapPanel mapPanel, MenuBus menuBus) {
         this.mapPanel = mapPanel;
+        this.menuBus = menuBus;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Hello Graphic World Timer");
         mapPanel.repaint();
+        menuBus.repaint();
     }
 }

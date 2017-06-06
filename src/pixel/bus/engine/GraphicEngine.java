@@ -1,6 +1,7 @@
 package pixel.bus.engine;
 
 import pixel.bus.gui.MapPanel;
+import pixel.bus.gui.MenuBus;
 
 import javax.swing.*;
 
@@ -9,15 +10,12 @@ import javax.swing.*;
  */
 public class GraphicEngine implements Runnable {
 
-    private static int FREQUENCY = 1000/10;
-
-    private MapPanel mapPanel;
+    private static int DELAY = 1000/10;
 
     private static Timer timer;
 
-    public GraphicEngine(MapPanel mapPanel){
-        this.mapPanel = mapPanel;
-        timer = new Timer(FREQUENCY, new GraphicEngineActionListener(mapPanel));
+    public GraphicEngine(MapPanel mapPanel, MenuBus menuBus){
+        timer = new Timer(DELAY, new GraphicEngineActionListener(mapPanel, menuBus) );
     }
 
     public void run() {

@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by vanley on 01/06/2017.
  */
-public class TileStation extends Tile{
+public class TileStation extends Tile {
     private String imageLocation = "/res/img/city1.png";
     private Station station;
 
