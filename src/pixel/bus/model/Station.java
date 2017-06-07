@@ -37,6 +37,7 @@ public class Station {
     public static void queuePassengers(){
         for(Station station : stations){
             //todo is still waiting
+            station.checkPassengers();
             if (station.nextPassengersIn == 0){
                 station.addPassengerGroup(station.nextPassengersAmount);
                 station.scheduleNextPassengers();
@@ -46,24 +47,23 @@ public class Station {
         }
     }
 
+    private void checkPassengers() {
+        Iterator<Passenger> iterator = passengerQueue.iterator();
+        for (Iterator<Passenger> it = passengerQueue.iterator(); it.hasNext(); ) {
+            Passenger aValue = it.next();
+            if(!aValue.isWaiting()) {
+                it.remove();
+            }
+        }
+    }
+
     private void scheduleNextPassengers(){
         int min = 0;
         int max = 100;
-        int integerFromRange = getRandomIntegerFromRange(min, max);
-        int integerFromRange2 = getRandomIntegerFromRange(min, max);
+        int integerFromRange = Utilities.getRandomIntegerFromRange(min, max);
+        int integerFromRange2 = Utilities.getRandomIntegerFromRange(min, max);
         nextPassengersIn = (integerFromRange * integerFromRange2)/100 - stationSize;
         nextPassengersAmount = integerFromRange * integerFromRange2/1000 + stationSize;
-    }
-
-    private static int getRandomIntegerFromRange(int min, int max){
-        Random random = new Random();
-        if (min > max) {
-            throw new IllegalArgumentException("minimum cannot exceed maximum.");
-        }
-        long range = (long)max - (long)min + 1;
-        long fraction = (long)(range * random.nextDouble());
-        return (int)(fraction + min);
-
     }
 
 }

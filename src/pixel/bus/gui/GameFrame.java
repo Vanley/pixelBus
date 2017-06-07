@@ -23,27 +23,13 @@ public class GameFrame {
     private JButton btnStartNew;
     private JButton btnExit;
 
-    private static City city = new City(CityLevels.cityLevel1);
-
-    private static MapPanel mapPanel= new MapPanel(city);
-
-    private static MenuBusPanel menuBusPanel = new MenuBusPanel();
-
-    private GameEngine gameEngine = new GameEngine();
-
-
     public GameFrame() {
+        GameEngine gameEngine = new GameEngine();
+
         mainWindow.setFocusable(true);
         mainWindow.requestFocusInWindow();
         cardMenu.setVisible(true);
         cardGame.setVisible(false);
-
-        if(cardMenu.isVisible()){
-            MenuBusPanel menuBusPanel = new MenuBusPanel();
-            animateBusPanel = menuBusPanel;
-        } else {
-
-        }
 
         mainWindow.addKeyListener(new KeyAdapter() {
             @Override
@@ -98,9 +84,11 @@ public class GameFrame {
     }
 
     private void createUIComponents() {
-        animateBusPanel = menuBusPanel;
-        animateBusPanel.setMinimumSize(new Dimension(100, 100));
-        panelMap = mapPanel;
+        animateBusPanel = new MenuBusPanel();
+        animateBusPanel.setMinimumSize(new Dimension(100, 120));
+
+        City city = new City(CityLevels.cityLevel1);
+        panelMap = new MapPanel(city);
         panelMap.setMinimumSize(new Dimension(city.getCityX(), city.getCityY()));
         panelMap.setMaximumSize(new Dimension(city.getCityX(), city.getCityY()));
         // TODO: place custom component creation code here
