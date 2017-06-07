@@ -1,4 +1,4 @@
-package pixel.bus.engine;
+package pixel.bus.gui.engine;
 
 import pixel.bus.gui.MapPanel;
 import pixel.bus.gui.MenuBus;

@@ -7,8 +7,9 @@ import java.util.*;
  */
 public class Station {
     private String name;
-    private int rangeMin = 0;
-    private int rangeMax = 7;
+    private int nextPassengersIn = 0;
+    private int nextPassengersAmount = 0;
+    private int stationSize = 0;
 
     private static List<Station> stations = new ArrayList<>();
 
@@ -26,15 +27,32 @@ public class Station {
         passengerQueue.add(new Passenger());
     }
 
+    public void addPassengerGroup(int amount){
+        while (amount > 0){
+            addPassenger();
+            amount--;
+        }
+    }
+
     public static void queuePassengers(){
         for(Station station : stations){
             //todo is still waiting
-            int count = getRandomIntegerFromRange(station.rangeMin, station.rangeMax);
-            while (count > 0){
-                station.passengerQueue.add(new Passenger());
-                count--;
+            if (station.nextPassengersIn == 0){
+                station.addPassengerGroup(station.nextPassengersAmount);
+                station.scheduleNextPassengers();
+            } else {
+                station.nextPassengersIn--;
             }
         }
+    }
+
+    private void scheduleNextPassengers(){
+        int min = 0;
+        int max = 100;
+        int integerFromRange = getRandomIntegerFromRange(min, max);
+        int integerFromRange2 = getRandomIntegerFromRange(min, max);
+        nextPassengersIn = (integerFromRange * integerFromRange2)/100 - stationSize;
+        nextPassengersAmount = integerFromRange * integerFromRange2/1000 + stationSize;
     }
 
     private static int getRandomIntegerFromRange(int min, int max){
@@ -48,11 +66,4 @@ public class Station {
 
     }
 
-    public int getRangeMax() {
-        return rangeMax;
-    }
-
-    public void setRangeMax(int rangeMax) {
-        this.rangeMax = rangeMax;
-    }
 }

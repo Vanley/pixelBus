@@ -1,35 +1,38 @@
 package pixel.bus.gui;
 
-import pixel.bus.engine.GameEngine;
-import pixel.bus.engine.GraphicEngine;
+import pixel.bus.gui.engine.GameEngine;
+import pixel.bus.gui.engine.GraphicEngine;
 import pixel.bus.model.City;
 import pixel.bus.model.CityLevels;
-import pixel.bus.model.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Created by vanley on 21/05/2017.
  */
 public class Game {
+    private static JFrame frame = new JFrame("PIXEL BUS");
     private JPanel mainWindow;
-    private JPanel panelMap;
     private JPanel cardGame;
     private JPanel cardMenu;
     private JPanel cardOther;
-    private JButton button1;
+    private JPanel panelMap;
     private JPanel animateBusPanel;
+    private JButton btnContinue;
+    private JButton btnStartNew;
+    private JButton btnExit;
 
-    private static Player player = new Player();
+    public static int tick = 0;
+    public static int gameSpeed = 10;
+
     private static City city = new City(CityLevels.cityLevel1);
 
     private static MapPanel mapPanel = new MapPanel(city);
     private static MenuBus menuBus = new MenuBus();
 
-    private static GameEngine gameEngine = new GameEngine(player);
+    private static GameEngine gameEngine = new GameEngine();
     private static GraphicEngine graphicEngine = new GraphicEngine(mapPanel, menuBus);
 
 
@@ -50,23 +53,42 @@ public class Game {
                 }
             }
         });
+        btnExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            }
+        });
+        btnContinue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardMenu.setVisible(false);
+                cardGame.setVisible(true);
+            }
+        });
+        btnStartNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardMenu.setVisible(false);
+                cardGame.setVisible(true);
+                EventQueue.invokeLater(gameEngine);
+                gameEngine.unPause();
+            }
+        });
     }
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new MainFrame());
 
-        EventQueue.invokeLater(gameEngine);
         EventQueue.invokeLater(graphicEngine);
-//        gameEngine.unPause();
         graphicEngine.unPause();
     }
 
     static class MainFrame implements Runnable {
         @Override
         public void run() {
-            JFrame frame = new JFrame("PIXEL BUS");
             frame.setContentPane(new Game().mainWindow);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setTitle("PIXEL BUS");
             frame.pack();
@@ -82,4 +104,5 @@ public class Game {
         panelMap.setMaximumSize(new Dimension(city.getCityX(), city.getCityY()));
         // TODO: place custom component creation code here
     }
+
 }

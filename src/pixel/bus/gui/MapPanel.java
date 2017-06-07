@@ -29,7 +29,7 @@ public class MapPanel extends JPanel {
 
     private void paintStatistic(Graphics g) {
             g.setColor(new Color(0, 0, 0));
-            g.drawString("Label:", 25, 20);
+            g.drawString("Tick: " + Game.tick, 25, 20);
     }
 
     private void paintCity(Graphics g) {
