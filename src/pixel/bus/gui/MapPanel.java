@@ -1,23 +1,30 @@
 package pixel.bus.gui;
 
+import pixel.bus.model.AGame;
 import pixel.bus.model.City;
-import pixel.bus.model.CityLevels;
 import pixel.bus.model.Tile;
-import pixel.bus.model.TileRoad;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by vanley on 21/05/2017.
  */
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements ActionListener {
+    private static int DELAY = 1000/10;
+    private static Timer timer;
+
     private City city;
+
 
     public MapPanel(City city) {
         this.city = city;
         setFocusable(true);
+
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     @Override
@@ -29,7 +36,7 @@ public class MapPanel extends JPanel {
 
     private void paintStatistic(Graphics g) {
             g.setColor(new Color(0, 0, 0));
-            g.drawString("Tick: " + Game.tick, 25, 20);
+            g.drawString("Tick: " + AGame.tick, 25, 20);
     }
 
     private void paintCity(Graphics g) {
@@ -44,4 +51,8 @@ public class MapPanel extends JPanel {
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.repaint();
+    }
 }

@@ -2,22 +2,28 @@ package pixel.bus.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * Created by vanley on 06/06/2017.
  */
-public class MenuBus extends JPanel {
-
+public class MenuBusPanel extends JPanel implements ActionListener {
+    private static int DELAY = 1000/10;
     private ArrayList<Image> images = new ArrayList<>();
     private int rotation = 0;
+    private Timer timer;
 
-    public MenuBus() {
+    public MenuBusPanel() {
         images.add(setImage("/res/img/bus1.png"));
         images.add(setImage("/res/img/bus2.png"));
         images.add(setImage("/res/img/bus3.png"));
         images.add(setImage("/res/img/bus4.png"));
+
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     @Override
@@ -32,7 +38,7 @@ public class MenuBus extends JPanel {
     }
 
     private Image setImage(String imageLocation){
-        URL loc = MenuBus.class.getResource(imageLocation);
+        URL loc = MenuBusPanel.class.getResource(imageLocation);
         return new ImageIcon(loc).getImage();
     }
 
@@ -40,5 +46,10 @@ public class MenuBus extends JPanel {
         rotation++;
         if (rotation == images.size()) rotation = 0;
         return images.get(rotation);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.repaint();
     }
 }

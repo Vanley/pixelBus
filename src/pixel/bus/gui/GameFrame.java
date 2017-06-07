@@ -1,7 +1,6 @@
 package pixel.bus.gui;
 
 import pixel.bus.gui.engine.GameEngine;
-import pixel.bus.gui.engine.GraphicEngine;
 import pixel.bus.model.City;
 import pixel.bus.model.CityLevels;
 
@@ -12,7 +11,7 @@ import java.awt.event.*;
 /**
  * Created by vanley on 21/05/2017.
  */
-public class Game {
+public class GameFrame {
     private static JFrame frame = new JFrame("PIXEL BUS");
     private JPanel mainWindow;
     private JPanel cardGame;
@@ -24,23 +23,27 @@ public class Game {
     private JButton btnStartNew;
     private JButton btnExit;
 
-    public static int tick = 0;
-    public static int gameSpeed = 10;
-
     private static City city = new City(CityLevels.cityLevel1);
 
-    private static MapPanel mapPanel = new MapPanel(city);
-    private static MenuBus menuBus = new MenuBus();
+    private static MapPanel mapPanel= new MapPanel(city);
 
-    private static GameEngine gameEngine = new GameEngine();
-    private static GraphicEngine graphicEngine = new GraphicEngine(mapPanel, menuBus);
+    private static MenuBusPanel menuBusPanel = new MenuBusPanel();
+
+    private GameEngine gameEngine = new GameEngine();
 
 
-    public Game() {
+    public GameFrame() {
         mainWindow.setFocusable(true);
         mainWindow.requestFocusInWindow();
         cardMenu.setVisible(true);
         cardGame.setVisible(false);
+
+        if(cardMenu.isVisible()){
+            MenuBusPanel menuBusPanel = new MenuBusPanel();
+            animateBusPanel = menuBusPanel;
+        } else {
+
+        }
 
         mainWindow.addKeyListener(new KeyAdapter() {
             @Override
@@ -80,14 +83,12 @@ public class Game {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new MainFrame());
 
-        EventQueue.invokeLater(graphicEngine);
-        graphicEngine.unPause();
     }
 
     static class MainFrame implements Runnable {
         @Override
         public void run() {
-            frame.setContentPane(new Game().mainWindow);
+            frame.setContentPane(new GameFrame().mainWindow);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setTitle("PIXEL BUS");
@@ -97,7 +98,7 @@ public class Game {
     }
 
     private void createUIComponents() {
-        animateBusPanel = menuBus;
+        animateBusPanel = menuBusPanel;
         animateBusPanel.setMinimumSize(new Dimension(100, 100));
         panelMap = mapPanel;
         panelMap.setMinimumSize(new Dimension(city.getCityX(), city.getCityY()));

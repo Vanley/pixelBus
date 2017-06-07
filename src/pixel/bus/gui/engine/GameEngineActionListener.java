@@ -1,6 +1,6 @@
 package pixel.bus.gui.engine;
 
-import pixel.bus.gui.Game;
+import pixel.bus.model.AGame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +14,7 @@ public class GameEngineActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Game.tick++;
+        AGame.tick++;
         queuePassengers();
         System.out.println("Hello Game World Timer");
     }

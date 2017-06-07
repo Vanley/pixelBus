@@ -1,6 +1,7 @@
 package pixel.bus.gui.engine;
 
-import pixel.bus.gui.Game;
+import pixel.bus.gui.GameFrame;
+import pixel.bus.model.AGame;
 
 import javax.swing.*;
 
@@ -12,7 +13,7 @@ public class GameEngine implements Runnable {
     private static Timer timer;
 
     public GameEngine(){
-        timer = new Timer(50 * Game.gameSpeed, new GameEngineActionListener());
+        timer = new Timer(50 * AGame.gameSpeed, new GameEngineActionListener());
     }
 
     public void run() {
