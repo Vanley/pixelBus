@@ -1,6 +1,6 @@
 package pixel.bus.gui;
 
-import pixel.bus.model.AGame;
+import pixel.bus.model.Game;
 import pixel.bus.model.City;
 import pixel.bus.model.Tile;
 
@@ -17,7 +17,6 @@ public class MapPanel extends JPanel implements ActionListener {
     private static Timer timer;
 
     private City city;
-
 
     public MapPanel(City city) {
         this.city = city;
@@ -36,7 +35,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private void paintStatistic(Graphics g) {
             g.setColor(new Color(0, 0, 0));
-            g.drawString("Tick: " + AGame.tick, 25, 20);
+            g.drawString("Tick: " + Game.tick, 25, 20);
     }
 
     private void paintCity(Graphics g) {

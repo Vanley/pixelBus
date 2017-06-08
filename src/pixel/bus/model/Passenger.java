@@ -10,14 +10,12 @@ public class Passenger {
 
 
     public Passenger(){
-        this.timeOfArrival = AGame.tick;
+        this.timeOfArrival = Game.tick;
         this.willWaitTo = timeOfArrival + generateWillWaitTo();
     }
 
     public boolean isWaiting() {
-        return AGame.tick < willWaitTo;
-        // dao station, passanger, gaame, vehicle
-        //add different frame for menu or add null game for preloading pannels
+        return Game.tick < willWaitTo;
     }
 
     private static int generateWillWaitTo(){

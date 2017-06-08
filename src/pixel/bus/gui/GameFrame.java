@@ -1,97 +1,43 @@
 package pixel.bus.gui;
 
-import pixel.bus.gui.engine.GameEngine;
+import pixel.bus.model.Game;
 import pixel.bus.model.City;
-import pixel.bus.model.CityLevels;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
- * Created by vanley on 21/05/2017.
+ * Created by vanley on 07/06/2017.
  */
-public class GameFrame {
-    private static JFrame frame = new JFrame("PIXEL BUS");
-    private JPanel mainWindow;
-    private JPanel cardGame;
-    private JPanel cardMenu;
-    private JPanel cardOther;
-    private JPanel panelMap;
-    private JPanel animateBusPanel;
-    private JButton btnContinue;
-    private JButton btnStartNew;
-    private JButton btnExit;
+public class GameFrame extends JFrame {
+    public JPanel mainPanel;
+    private JPanel mapPanel;
+    private Game game;
 
-    public GameFrame() {
-        GameEngine gameEngine = new GameEngine();
 
-        mainWindow.setFocusable(true);
-        mainWindow.requestFocusInWindow();
-        cardMenu.setVisible(true);
-        cardGame.setVisible(false);
+    public GameFrame(Game game) {
+        this.game = game;
+        mainPanel.setFocusable(true);
+        mainPanel.requestFocusInWindow();
 
-        mainWindow.addKeyListener(new KeyAdapter() {
+        mainPanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
                     System.out.println("ESC pressed");
-                    cardMenu.setVisible(!cardMenu.isVisible());
-                    cardGame.setVisible(!cardGame.isVisible());
+                    MenuFrame.goToMenu();
                 }
             }
         });
-        btnExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-            }
-        });
-        btnContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardMenu.setVisible(false);
-                cardGame.setVisible(true);
-            }
-        });
-        btnStartNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardMenu.setVisible(false);
-                cardGame.setVisible(true);
-                EventQueue.invokeLater(gameEngine);
-                gameEngine.unPause();
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new MainFrame());
-
-    }
-
-    static class MainFrame implements Runnable {
-        @Override
-        public void run() {
-            frame.setContentPane(new GameFrame().mainWindow);
-            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setLocationRelativeTo(null);
-            frame.setTitle("PIXEL BUS");
-            frame.pack();
-            frame.setVisible(true);
-        }
     }
 
     private void createUIComponents() {
-        animateBusPanel = new MenuBusPanel();
-        animateBusPanel.setMinimumSize(new Dimension(100, 120));
-
-        City city = new City(CityLevels.cityLevel1);
-        panelMap = new MapPanel(city);
-        panelMap.setMinimumSize(new Dimension(city.getCityX(), city.getCityY()));
-        panelMap.setMaximumSize(new Dimension(city.getCityX(), city.getCityY()));
-        // TODO: place custom component creation code here
+        City city = game.getCity();
+        mapPanel = new MapPanel(city);
+        mapPanel.setMinimumSize(new Dimension(city.getCityX(), city.getCityY()));
+        mapPanel.setMaximumSize(new Dimension(city.getCityX(), city.getCityY()));
     }
-
 }

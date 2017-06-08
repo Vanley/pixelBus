@@ -6,9 +6,11 @@ package pixel.bus.model;
 public class CityLevels {
 
     public static final String cityLevel1 =
-                      " \n"
+            " \n"
                     + "     s\n"
                     + "                   s     \n"
                     + " \n";
 
+    public static final String cityLevel0 =
+            " \n";
 }
