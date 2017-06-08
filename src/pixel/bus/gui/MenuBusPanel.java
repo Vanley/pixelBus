@@ -17,10 +17,10 @@ public class MenuBusPanel extends JPanel implements ActionListener {
     private Timer timer;
 
     public MenuBusPanel() {
-        images.add(setImage("/res/img/bus1.png"));
-        images.add(setImage("/res/img/bus2.png"));
-        images.add(setImage("/res/img/bus3.png"));
-        images.add(setImage("/res/img/bus4.png"));
+        images.add(setImage("/res/img/bus/bus1.png"));
+        images.add(setImage("/res/img/bus/bus2.png"));
+        images.add(setImage("/res/img/bus/bus3.png"));
+        images.add(setImage("/res/img/bus/bus4.png"));
 
         timer = new Timer(DELAY, this);
         timer.start();

@@ -9,7 +9,8 @@ public class Game {
     public City city;
 
     public Game(String cityLevel){
-        city = new City(cityLevel);
+        Game.tick = 0;
+        this.city = new City(cityLevel);
     }
 
     public City getCity() {
