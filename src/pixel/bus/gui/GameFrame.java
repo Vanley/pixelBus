@@ -1,5 +1,7 @@
 package pixel.bus.gui;
 
+import pixel.bus.dao.DaoFactory;
+import pixel.bus.dao.IGameDao;
 import pixel.bus.model.Game;
 import pixel.bus.model.City;
 
@@ -14,13 +16,13 @@ import java.awt.event.KeyEvent;
 public class GameFrame extends JFrame {
     public JPanel mainPanel;
     private JPanel mapPanel;
-    private Game game;
+    private final Game game;
 
 
-    public GameFrame(Game game) {
+    public GameFrame(final Game game) {
         this.game = game;
-        mainPanel.setFocusable(true);
-        mainPanel.requestFocusInWindow();
+
+        game.unPause();
 
         mainPanel.addKeyListener(new KeyAdapter() {
             @Override
@@ -28,10 +30,20 @@ public class GameFrame extends JFrame {
                 super.keyTyped(e);
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
                     System.out.println("ESC pressed");
+
+                    game.pause();
+
+                    IGameDao gameDB = DaoFactory.getInstance(IGameDao.class);
+                    gameDB.create(game);
+
                     MenuFrame.goToMenu();
+                    System.out.println("Closing Game window");
                 }
             }
         });
+
+        mainPanel.setFocusable(true);
+        mainPanel.requestFocusInWindow();
     }
 
     private void createUIComponents() {

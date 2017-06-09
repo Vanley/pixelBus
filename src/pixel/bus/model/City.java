@@ -10,6 +10,7 @@ public class City {
     private int cityY;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
+
     private String cityLevel;
 
     public City(String cityLevel) {
@@ -23,6 +24,10 @@ public class City {
 
     public int getCityY() {
         return this.cityY;
+    }
+
+    public String getCityLevel() {
+        return cityLevel;
     }
 
     public ArrayList<Tile> getTiles() {

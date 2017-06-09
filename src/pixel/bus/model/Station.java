@@ -6,7 +6,7 @@ import java.util.*;
  * Created by vanley on 21/05/2017.
  */
 public class Station {
-    private String name;
+    private String name = "";
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
     private int stationSize = 0;
@@ -34,19 +34,6 @@ public class Station {
         }
     }
 
-    public static void queuePassengers(){
-        for(Station station : stations){
-            //todo is still waiting
-            station.checkPassengers();
-            if (station.nextPassengersIn == 0){
-                station.addPassengerGroup(station.nextPassengersAmount);
-                station.scheduleNextPassengers();
-            } else {
-                station.nextPassengersIn--;
-            }
-        }
-    }
-
     private void checkPassengers() {
         Iterator<Passenger> iterator = passengerQueue.iterator();
         for (Iterator<Passenger> it = passengerQueue.iterator(); it.hasNext(); ) {
@@ -64,6 +51,18 @@ public class Station {
         int integerFromRange2 = Utilities.getRandomIntegerFromRange(min, max);
         nextPassengersIn = (integerFromRange * integerFromRange2)/100 - stationSize;
         nextPassengersAmount = integerFromRange * integerFromRange2/1000 + stationSize;
+    }
+
+    public static void queuePassengers(){
+        for(Station station : stations){
+            station.checkPassengers();
+            if (station.nextPassengersIn == 0){
+                station.addPassengerGroup(station.nextPassengersAmount);
+                station.scheduleNextPassengers();
+            } else {
+                station.nextPassengersIn--;
+            }
+        }
     }
 
 }

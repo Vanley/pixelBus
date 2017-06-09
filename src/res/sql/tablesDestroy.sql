@@ -1,2 +1,3 @@
-DROP TABLE productdb
-DROP TABLE sellerdb
+DROP TABLE passengers
+DROP TABLE stations
+DROP TABLE game

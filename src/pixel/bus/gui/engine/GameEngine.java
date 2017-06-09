@@ -38,7 +38,7 @@ public class GameEngine implements Runnable, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        game.tick++;
+        Game.tick();
         queuePassengers();
     }
 }

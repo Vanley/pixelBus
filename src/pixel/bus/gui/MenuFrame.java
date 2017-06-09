@@ -1,6 +1,7 @@
 package pixel.bus.gui;
 
-import pixel.bus.gui.engine.GameEngine;
+import pixel.bus.dao.DaoFactory;
+import pixel.bus.dao.IGameDao;
 import pixel.bus.model.Game;
 import pixel.bus.model.CityLevels;
 
@@ -23,12 +24,8 @@ public class MenuFrame {
     private JButton btnExit;
 
     public MenuFrame() {
-
-
-        mainWindow.setFocusable(true);
-        mainWindow.requestFocusInWindow();
-        cardMenu.setVisible(true);
-        cardLevelDetails.setVisible(false);
+        IGameDao gameDB = DaoFactory.getInstance(IGameDao.class);
+        btnContinue.setVisible(gameDB.isSaved());
 
         btnExit.addActionListener(new ActionListener() {
             @Override
@@ -43,27 +40,33 @@ public class MenuFrame {
                 //TODO LOAD GAME FROM DB
                 ////todo dao station, passanger, gaame, vehicle
 
-
-                goToGame(CityLevels.cityLevel1);
+                Game game = gameDB.read();
+                goToGame(game);
             }
         });
         btnStartNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                goToGame(CityLevels.cityLevel1);
+                Game game = new Game(CityLevels.cityLevel1);
+                goToGame(game);
             }
         });
+
+        mainWindow.setFocusable(true);
+        mainWindow.requestFocusInWindow();
+        cardMenu.setVisible(true);
+        cardLevelDetails.setVisible(false);
     }
 
-    public static void goToMenu(){
+    public void goToMenu(){
         gameFrame.dispose();
+
+        menuFrame.repaint();
         menuFrame.setVisible(true);
     }
 
-    public void goToGame(String cityLevel){
-        Game game = new Game(cityLevel);
-
+    public void goToGame(Game game){
         gameFrame.setContentPane(new GameFrame(game).mainPanel);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setLocationRelativeTo(null);
@@ -73,11 +76,7 @@ public class MenuFrame {
         gameFrame.setVisible(true);
 
         menuFrame.setVisible(false);
-
-        GameEngine gameEngine = new GameEngine(game);
-
-        EventQueue.invokeLater(gameEngine);
-        gameEngine.unPause();
+        btnContinue.setVisible(true);
     }
 
     public static void main(String[] args) {

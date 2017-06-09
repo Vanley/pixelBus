@@ -4,18 +4,18 @@ package pixel.bus.model;
  * Created by vanley on 29/05/2017.
  */
 public class Passenger {
-    private int timeOfArrival;
+    private int tickOfArrival;
     private int willWaitTo;
     private String destination;
 
 
     public Passenger(){
-        this.timeOfArrival = Game.tick;
-        this.willWaitTo = timeOfArrival + generateWillWaitTo();
+        this.tickOfArrival = Game.getTick();
+        this.willWaitTo = tickOfArrival + generateWillWaitTo();
     }
 
     public boolean isWaiting() {
-        return Game.tick < willWaitTo;
+        return Game.getTick() < willWaitTo;
     }
 
     private static int generateWillWaitTo(){
