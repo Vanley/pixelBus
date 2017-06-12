@@ -3,7 +3,7 @@ package pixel.bus.gui;
 import pixel.bus.dao.DaoFactory;
 import pixel.bus.dao.IGameDao;
 import pixel.bus.model.Game;
-import pixel.bus.model.CityLevels;
+import pixel.bus.model.CityLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class MenuFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Game game = new Game(CityLevels.cityLevel1);
+                Game game = new Game(CityLevel.LEVEL_ONE);
                 goToGame(game);
             }
         });

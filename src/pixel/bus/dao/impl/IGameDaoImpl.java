@@ -1,6 +1,7 @@
 package pixel.bus.dao.impl;
 
 import pixel.bus.dao.IGameDao;
+import pixel.bus.model.CityLevel;
 import pixel.bus.model.Game;
 import pixel.bus.utils.DerbyConnectionUtility;
 
@@ -23,7 +24,7 @@ public class IGameDaoImpl implements IGameDao {
 
             if(cursor.next()){
                 Game game = new Game(
-                        cursor.getString("cityLevel"),
+                        CityLevel.valueOf(cursor.getString("cityLevel")),
                         cursor.getInt("gameSpeed"),
                         cursor.getInt("tick")
                 );
@@ -42,7 +43,7 @@ public class IGameDaoImpl implements IGameDao {
         try (Connection conn = DerbyConnectionUtility.getConnection()){
             PreparedStatement stmt = conn.prepareStatement("insert into game values (?, ?, ?, ?)");
             stmt.setInt(1, 1);
-            stmt.setString(2, game.getCity().getCityLevel());
+            stmt.setString(2, game.getCity().getCityLevel().toString());
             stmt.setInt(3, Game.getTick());
             stmt.setInt(4, game.getGameSpeed());
 
@@ -59,7 +60,7 @@ public class IGameDaoImpl implements IGameDao {
     public boolean update(Game game) {
         try (Connection conn = DerbyConnectionUtility.getConnection()){
             PreparedStatement stmt = conn.prepareStatement("UPDATE game SET cityLevel = ?, tick = ?, gameSpeed = ? WHERE id = 1");
-            stmt.setString(1, game.getCity().getCityLevel());
+            stmt.setString(1, game.getCity().getCityLevel().toString());
             stmt.setInt(2, Game.getTick());
             stmt.setInt(3, game.getGameSpeed());
 

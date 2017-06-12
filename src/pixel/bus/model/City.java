@@ -12,10 +12,9 @@ public class City {
     private Dimension dimension;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
+    private CityLevel cityLevel;
 
-    private String cityLevel;
-
-    public City(String cityLevel) {
+    public City(CityLevel cityLevel) {
         this.cityLevel = cityLevel;
         buildMapTiles();
     }
@@ -24,7 +23,7 @@ public class City {
         return dimension;
     }
 
-    public String getCityLevel() {
+    public CityLevel getCityLevel() {
         return cityLevel;
     }
 
@@ -33,13 +32,14 @@ public class City {
     }
 
     public final void buildMapTiles() {
+        String cityString = cityLevel.getMap();
         int tileSize = Tile.getTileSize();
         int x = tileSize;
         int y = tileSize;
 
-        for (int i = 0; i < cityLevel.length(); i++) {
+        for (int i = 0; i < cityString.length(); i++) {
 
-            char item = cityLevel.charAt(i);
+            char item = cityString.charAt(i);
 
             if (item == '\n') {
                 y += tileSize;

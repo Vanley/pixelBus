@@ -16,13 +16,13 @@ public class Game implements ActionListener {
 
     private City city;
 
-    public Game(String cityLevel){
+    public Game(CityLevel cityLevel){
         Game.tick = 0;
         this.city = new City(cityLevel);
         setNewTimer(50);
     }
 
-    public Game(String cityLevel, int gameSpeed, int tick) {
+    public Game(CityLevel cityLevel, int gameSpeed, int tick) {
         this.gameSpeed = gameSpeed;
         this.city = new City(cityLevel);
         Game.tick = tick;
