@@ -6,7 +6,6 @@ import pixel.bus.model.Game;
 import pixel.bus.model.City;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 

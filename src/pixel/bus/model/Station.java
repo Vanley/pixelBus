@@ -1,22 +1,35 @@
 package pixel.bus.model;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by vanley on 21/05/2017.
  */
-public class Station {
+public class Station extends Tile {
+    private String imageLocation = "/res/img/city1.png";
+
     private String name = "";
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
     private int stationSize = 0;
 
+
     private static List<Station> stations = new ArrayList<>();
 
     private Queue<Passenger> passengerQueue = new LinkedList<>();
 
-    public Station () {
+    public Station (int x, int y) {
+        super(x, y);
+        this.setImage(imageLocation);
+
         stations.add(this);
+        RoadConnection.connect(stations);
+    }
+
+    public static List<Station> getStations() {
+        return stations;
     }
 
     public Queue<Passenger> getPassengerQueue() {
@@ -63,6 +76,12 @@ public class Station {
                 station.nextPassengersIn--;
             }
         }
+    }
+
+    @Override
+    public void animate(Graphics g) {
+        g.setColor(new Color(200, 0, 0));
+        g.drawString(" "+ this.getPassengerQueue().size(), getX(), getY()+getTileSize() * 4/3);
     }
 
 }

@@ -29,29 +29,9 @@ public class Game implements ActionListener {
         setNewTimer(50);
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public static int getTick() {
-        return Game.tick;
-    }
-
-
     public static void tick() {
         Game.tick++;
     }
-
-    public int getGameSpeed() {
-        return gameSpeed;
-    }
-
-    public void setGameSpeed(int gameSpeed) {
-        this.gameSpeed = gameSpeed;
-    }
-
-
-
 
     public void setNewTimer(int delay) {
         timer = new Timer(delay * gameSpeed, this);
@@ -63,6 +43,22 @@ public class Game implements ActionListener {
 
     public void pause(){
         timer.stop();
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public static int getTick() {
+        return Game.tick;
+    }
+
+    public int getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public void setGameSpeed(int gameSpeed) {
+        this.gameSpeed = gameSpeed;
     }
 
 

@@ -37,21 +37,14 @@ public abstract class Tile {
         setImage(new ImageIcon(loc).getImage());
     }
 
-    public int x() {
+    public int getX() {
         return this.x;
     }
 
-    public int y() {
+    public int getY() {
         return this.y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public abstract void animate(Graphics g);
 

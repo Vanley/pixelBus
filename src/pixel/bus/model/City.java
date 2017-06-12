@@ -31,7 +31,7 @@ public class City {
         return tiles;
     }
 
-    public final void buildMapTiles() {
+    private void buildMapTiles() {
         String cityString = cityLevel.getMap();
         int tileSize = Tile.getTileSize();
         int x = tileSize;
@@ -51,7 +51,7 @@ public class City {
                 tiles.add(new TileRoad(x, y));
                 x += tileSize;
             } else if (item == 's') {
-                tiles.add(new TileStation(x, y));
+                tiles.add(new Station(x, y));
                 x += tileSize;
             } else if (item == ' ') {
                 x += tileSize;
