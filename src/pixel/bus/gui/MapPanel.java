@@ -51,6 +51,11 @@ public class MapPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    public Dimension getPreferredSize() {
+        return city.getDimension();
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         this.repaint();
     }

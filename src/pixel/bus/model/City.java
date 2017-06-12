@@ -1,5 +1,6 @@
 package pixel.bus.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class City {
     private int cityX;
     private int cityY;
+    private Dimension dimension;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
 
@@ -18,12 +20,8 @@ public class City {
         buildMapTiles();
     }
 
-    public int getCityX() {
-        return this.cityX;
-    }
-
-    public int getCityY() {
-        return this.cityY;
+    public Dimension getDimension() {
+        return dimension;
     }
 
     public String getCityLevel() {
@@ -63,5 +61,7 @@ public class City {
 
         cityX += tileSize;
         cityY += tileSize;
+
+        dimension = new Dimension(cityX, cityY);
     }
 }

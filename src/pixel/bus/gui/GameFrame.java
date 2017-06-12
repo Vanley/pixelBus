@@ -49,7 +49,5 @@ public class GameFrame extends JFrame {
     private void createUIComponents() {
         City city = game.getCity();
         mapPanel = new MapPanel(city);
-        mapPanel.setMinimumSize(new Dimension(city.getCityX(), city.getCityY()));
-        mapPanel.setMaximumSize(new Dimension(city.getCityX(), city.getCityY()));
     }
 }

@@ -49,6 +49,11 @@ public class MenuBusPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(200, 220);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         this.repaint();
     }

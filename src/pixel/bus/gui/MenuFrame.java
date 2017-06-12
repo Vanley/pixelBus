@@ -87,19 +87,23 @@ public class MenuFrame {
     static class MainFrame implements Runnable {
         @Override
         public void run() {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                ex.printStackTrace();
+            }
+
             menuFrame.setContentPane(new MenuFrame().mainWindow);
             menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             menuFrame.setLocationRelativeTo(null);
             menuFrame.setTitle("PIXEL BUS");
             menuFrame.pack();
-            menuFrame.setMinimumSize(new Dimension(200, 220));
             menuFrame.setVisible(true);
         }
     }
 
     private void createUIComponents() {
         animateBusPanel = new MenuBusPanel();
-        animateBusPanel.setMinimumSize(new Dimension(200, 220));
     }
 
 }
