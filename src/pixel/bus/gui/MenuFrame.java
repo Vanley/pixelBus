@@ -59,7 +59,7 @@ public class MenuFrame {
         cardLevelDetails.setVisible(false);
     }
 
-    public void goToMenu(){
+    public static void goToMenu(){
         gameFrame.dispose();
 
         menuFrame.repaint();
