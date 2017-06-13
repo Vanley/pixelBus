@@ -1,6 +1,8 @@
 package pixel.bus.model;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
 
@@ -80,8 +82,42 @@ public class Station extends Tile {
 
     @Override
     public void animate(Graphics g) {
-        g.setColor(new Color(200, 0, 0));
-        g.drawString(" "+ this.getPassengerQueue().size(), getX(), getY()+getTileSize() * 4/3);
+        animateDrawPassengerCountBackground(g);
+        animateDrawTownEllipse(g);
+        animateDrawPassengerCount(g);
+    }
+
+    private void animateDrawPassengerCountBackground(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setColor(new Color(200, 200, 200));
+        for (RoadConnection road : RoadConnection.getRoads()) {
+            Rectangle2D rect = new Rectangle(
+                    getX(),
+                    getY() + getTileSize() - 3,
+                    getTileSize(),
+                    14);
+            g2d.fill(rect);
+            g2d.draw(rect);
+        }
+        g2d.dispose();
+    }
+
+    private void animateDrawPassengerCount(Graphics g) {
+        g.setColor(new Color(0, 0, 0));
+        g.drawString(" "+ this.getPassengerQueue().size(), getX(), getY() + getTileSize() * 4/3);
+    }
+
+    private void animateDrawTownEllipse(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        Ellipse2D ellip = new  Ellipse2D.Double(
+                getX(),
+                getY() + getTileSize() - 8,
+                getTileSize(),
+                8);
+        g2d.setColor(new Color(180, 180, 180));
+        g2d.fill(ellip);
+        g2d.draw(ellip);
+        g2d.dispose();
     }
 
 }

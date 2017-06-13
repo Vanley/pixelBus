@@ -42,6 +42,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private void paintCityForeGround(Graphics g) {
         for (Station station : Station.getStations()){
+            station.animate(g);
             g.drawImage(station.getImage(), station.getX(), station.getY(), this);
         }
     }
@@ -60,6 +61,12 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private void paintRoads(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
+
+        //Antialiasing ON
+        g2d.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2d.setColor(new Color(150,150,150));
         for (RoadConnection road : RoadConnection.getRoads()) {
             int startPointX = center(road.getSource().getX());
@@ -74,6 +81,12 @@ public class MapPanel extends JPanel implements ActionListener {
             g2d.setStroke(new BasicStroke(4));
             g2d.draw(path);
         }
+
+        //Antialiasing OFF
+        g2d.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_OFF);
+
         g2d.dispose();
     }
 

@@ -53,6 +53,21 @@ public class City {
             } else if (item == 's') {
                 tiles.add(new Station(x, y));
                 x += tileSize;
+            } else if (item == 'f') {
+                tiles.add(new TileField(x, y));
+                x += tileSize;
+            } else if (item == 'p') {
+                tiles.add(new TileFieldPlain(x, y));
+                x += tileSize;
+            } else if (item == 't') {
+                tiles.add(new TileFieldTree(x, y));
+                x += tileSize;
+            } else if (item == 'r') {
+                tiles.add(new TileFieldTrees(x, y));
+                x += tileSize;
+            } else if (item == 'v') {
+                tiles.add(new TileFieldVege(x, y));
+                x += tileSize;
             } else if (item == ' ') {
                 x += tileSize;
             }
