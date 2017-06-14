@@ -1,14 +1,14 @@
-package pixel.bus.model;
+package pixel.bus.model.map;
 
 import java.awt.*;
 
 /**
  * Created by vanley on 12/06/2017.
  */
-public class TileFieldTree extends Tile {
-    private String imageLocation = "/res/img/field_tree.png";
+public class TileFieldTrees extends Tile {
+    private String imageLocation = "/res/img/field_trees.png";
 
-    public TileFieldTree(int x, int y) {
+    public TileFieldTrees(int x, int y) {
         super(x, y);
         this.setImage(imageLocation);
     }

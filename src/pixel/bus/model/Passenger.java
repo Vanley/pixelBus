@@ -1,13 +1,19 @@
 package pixel.bus.model;
 
+import pixel.bus.utils.RandomFromRange;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vanley on 29/05/2017.
  */
 public class Passenger {
+    public static final List<Passenger> passengerList = new ArrayList<>();
+
     private int tickOfArrival;
     private int willWaitTo;
     private String destination;
-
 
     public Passenger(){
         this.tickOfArrival = Game.getTick();
@@ -21,7 +27,7 @@ public class Passenger {
     private static int generateWillWaitTo(){
         int min = 50;
         int max = 100;
-        int integerFromRange = Utilities.getRandomIntegerFromRange(min, max);
+        int integerFromRange = RandomFromRange.get(min, max);
         return (integerFromRange * integerFromRange)/100 * 2 ;
     }
 

@@ -1,12 +1,12 @@
-package pixel.bus.model;
+package pixel.bus.utils;
 
 import java.util.Random;
 
 /**
  * Created by vanley on 07/06/2017.
  */
-public class Utilities {
-    public static int getRandomIntegerFromRange(int min, int max){
+public class RandomFromRange {
+    public static int get(int min, int max){
         Random random = new Random();
         if (min > max) {
             throw new IllegalArgumentException("minimum cannot exceed maximum.");

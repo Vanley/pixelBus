@@ -25,6 +25,12 @@ public class GameFrame extends JFrame {
     private JTable table1;
     private JScrollPane wrapper;
     private JButton button1;
+    private JTable table2;
+    private JTable table3;
+    private JRadioButton radioButton1;
+    private JRadioButton radioButton2;
+    private JRadioButton radioButton3;
+    private JRadioButton radioButton4;
     private final Game game;
 
     private static PassengerTableModel dtm;
@@ -60,8 +66,7 @@ public class GameFrame extends JFrame {
                         TitledBorder.LEADING,
                         TitledBorder.TOP));
 
-        List<Passenger> ppl = new ArrayList<>();
-        PassengerTableModel pmodel = new PassengerTableModel(ppl);
+        PassengerTableModel pmodel = new PassengerTableModel(Passenger.passengerList);
         table1.setModel(pmodel);
     dtm = pmodel;
 
@@ -76,6 +81,19 @@ public class GameFrame extends JFrame {
                 System.out.println("repaint tablle" + pmodel.getRowCount() + " -" + Station.getStations().size());
             }
         });
+
+        showSpeedControlGroup();
+    }
+
+
+    private void showSpeedControlGroup(){
+        ButtonGroup groupSpeedControl = new ButtonGroup();
+        groupSpeedControl.add(radioButton1);
+        groupSpeedControl.add(radioButton2);
+        groupSpeedControl.add(radioButton3);
+        groupSpeedControl.add(radioButton4);
+
+        //TODO Game service
     }
 
     private void createUIComponents() {
@@ -85,7 +103,7 @@ public class GameFrame extends JFrame {
     }
 
     public static void addToTable(Passenger p) {
-        dtm.customadd(p);
+        Passenger.passengerList.add(p);
         dtm.fireTableDataChanged();
     }
 

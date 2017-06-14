@@ -1,5 +1,7 @@
 package pixel.bus.model;
 
+import pixel.bus.model.map.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 

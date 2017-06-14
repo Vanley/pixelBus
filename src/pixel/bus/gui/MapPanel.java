@@ -1,13 +1,13 @@
 package pixel.bus.gui;
 
 import pixel.bus.model.*;
+import pixel.bus.model.map.Tile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Created by vanley on 21/05/2017.

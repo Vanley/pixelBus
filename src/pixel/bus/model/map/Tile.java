@@ -1,4 +1,4 @@
-package pixel.bus.model;
+package pixel.bus.model.map;
 
 import javax.swing.*;
 import java.awt.*;

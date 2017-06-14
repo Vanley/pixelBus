@@ -1,6 +1,8 @@
 package pixel.bus.model;
 
 import pixel.bus.gui.GameFrame;
+import pixel.bus.model.map.Tile;
+import pixel.bus.utils.RandomFromRange;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -66,8 +68,8 @@ public class Station extends Tile {
     private void scheduleNextPassengers(){
         int min = 0;
         int max = 100;
-        int integerFromRange = Utilities.getRandomIntegerFromRange(min, max);
-        int integerFromRange2 = Utilities.getRandomIntegerFromRange(min, max);
+        int integerFromRange = RandomFromRange.get(min, max);
+        int integerFromRange2 = RandomFromRange.get(min, max);
         nextPassengersIn = (integerFromRange * integerFromRange2)/100 - stationSize;
         nextPassengersAmount = integerFromRange * integerFromRange2/1000 + stationSize;
     }

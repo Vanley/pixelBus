@@ -67,7 +67,4 @@ public class PassengerTableModel extends AbstractTableModel {
         return null;
     }
 
-    public void customadd(Passenger passenger) {
-        passengerList.add(passenger);
-    }
 }
