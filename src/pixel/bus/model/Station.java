@@ -1,5 +1,7 @@
 package pixel.bus.model;
 
+import pixel.bus.gui.GameFrame;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -39,7 +41,9 @@ public class Station extends Tile {
     }
 
     public void addPassenger(){
-        passengerQueue.add(new Passenger());
+        Passenger p = new Passenger();
+        passengerQueue.add(p);
+        GameFrame.addToTable(p);
     }
 
     public void addPassengerGroup(int amount){

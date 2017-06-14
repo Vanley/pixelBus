@@ -24,4 +24,16 @@ public class Passenger {
         int integerFromRange = Utilities.getRandomIntegerFromRange(min, max);
         return (integerFromRange * integerFromRange)/100 * 2 ;
     }
+
+    public int getTickOfArrival() {
+        return tickOfArrival;
+    }
+
+    public int getWillWaitTo() {
+        return willWaitTo;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
 }
