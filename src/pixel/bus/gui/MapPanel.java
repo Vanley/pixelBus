@@ -2,6 +2,7 @@ package pixel.bus.gui;
 
 import pixel.bus.model.*;
 import pixel.bus.model.map.Tile;
+import pixel.bus.service.GameEngineService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private void paintStatistic(Graphics g) {
             g.setColor(new Color(0, 0, 0));
-            g.drawString("Tick: " + Game.getTick(), 25, 20);
+            g.drawString("Tick: " + GameEngineService.tick, 25, 20);
     }
 
     private void paintCityForeGround(Graphics g) {

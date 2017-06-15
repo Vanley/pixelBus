@@ -1,9 +1,11 @@
 package pixel.bus.gui;
 
 import pixel.bus.dao.DaoFactory;
-import pixel.bus.dao.IGameDao;
+import pixel.bus.dao.IGameDataDao;
 import pixel.bus.gui.renderer.CustomRenderer;
 import pixel.bus.model.*;
+import pixel.bus.service.GameEngineService;
+import pixel.bus.service.GameLoaderService;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -27,27 +29,23 @@ public class GameFrame extends JFrame {
     private JRadioButton radioButton2;
     private JRadioButton radioButton3;
     private JRadioButton radioButton4;
-    private final Game game;
+    private final GameLoaderService gameLoaderService;
 
     private static PassengerTableModel dtm;
 
-    public GameFrame(final Game game) {
-        this.game = game;
+    public GameFrame(final GameLoaderService gameLoaderService) {
+        this.gameLoaderService = gameLoaderService;
+        gameLoaderService.getInstance(GameEngineService.class).unPause();
 
-        game.unPause();
 
         mainPanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    System.out.println("ESC pressed");
+                    System.out.println("ESC pressed, opening main menu");
 
-                    game.pause();
-
-                    IGameDao gameDB = DaoFactory.getInstance(IGameDao.class);
-                    gameDB.create(game);
-
+                    gameLoaderService.unLoad();
                     MenuFrame.goToMenuFrame();
                     System.out.println("Closing Game window");
                 }
@@ -93,7 +91,7 @@ public class GameFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        City city = game.getCity();
+        City city = new City(gameLoaderService.getInstance(GameData.class).getCityLevel());
         mapPanel = new MapPanel(city);
     }
 

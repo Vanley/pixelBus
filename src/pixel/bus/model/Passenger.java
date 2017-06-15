@@ -1,5 +1,6 @@
 package pixel.bus.model;
 
+import pixel.bus.service.GameEngineService;
 import pixel.bus.utils.RandomFromRange;
 
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ public class Passenger {
     private String destination;
 
     public Passenger(){
-        this.tickOfArrival = Game.getTick();
+        this.tickOfArrival = GameEngineService.tick;
         this.willWaitTo = tickOfArrival + generateWillWaitTo();
     }
 
     public boolean isWaiting() {
-        return Game.getTick() < willWaitTo;
+        return GameEngineService.tick < willWaitTo;
     }
 
     private static int generateWillWaitTo(){

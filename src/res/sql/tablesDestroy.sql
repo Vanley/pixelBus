@@ -1,3 +1,3 @@
 DROP TABLE passengers
 DROP TABLE stations
-DROP TABLE game
+DROP TABLE game_data
