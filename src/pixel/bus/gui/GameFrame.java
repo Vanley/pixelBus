@@ -2,10 +2,8 @@ package pixel.bus.gui;
 
 import pixel.bus.dao.DaoFactory;
 import pixel.bus.dao.IGameDao;
-import pixel.bus.model.Game;
-import pixel.bus.model.City;
-import pixel.bus.model.Passenger;
-import pixel.bus.model.Station;
+import pixel.bus.gui.renderer.CustomRenderer;
+import pixel.bus.model.*;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -13,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.*;
-import java.util.List;
 
 /**
  * Created by vanley on 07/06/2017.
@@ -52,7 +48,7 @@ public class GameFrame extends JFrame {
                     IGameDao gameDB = DaoFactory.getInstance(IGameDao.class);
                     gameDB.create(game);
 
-                    MenuFrame.goToMenu();
+                    MenuFrame.goToMenuFrame();
                     System.out.println("Closing Game window");
                 }
             }
@@ -99,7 +95,6 @@ public class GameFrame extends JFrame {
     private void createUIComponents() {
         City city = game.getCity();
         mapPanel = new MapPanel(city);
-
     }
 
     public static void addToTable(Passenger p) {

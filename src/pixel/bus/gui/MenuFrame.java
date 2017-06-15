@@ -1,9 +1,8 @@
 package pixel.bus.gui;
 
-import pixel.bus.dao.DaoFactory;
-import pixel.bus.dao.IGameDao;
 import pixel.bus.model.Game;
 import pixel.bus.model.CityLevel;
+import pixel.bus.service.GameSelectionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,35 +22,12 @@ public class MenuFrame {
     private JButton btnStartNew;
     private JButton btnExit;
 
+    private GameSelectionService gameSelectionService = new GameSelectionService();
+
     public MenuFrame() {
-        IGameDao gameDB = DaoFactory.getInstance(IGameDao.class);
-        btnContinue.setVisible(gameDB.isSaved());
+        btnContinue.setVisible(gameSelectionService.hasInstanceInDB());
 
-        btnExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuFrame.dispatchEvent(new WindowEvent(menuFrame, WindowEvent.WINDOW_CLOSING));
-            }
-        });
-        btnContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //TODO LOAD GAME FROM DB
-                ////todo dao station, passanger, gaame, vehicle
-
-                Game game = gameDB.read();
-                goToGame(game);
-            }
-        });
-        btnStartNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Game game = new Game(CityLevel.LEVEL_ONE);
-                goToGame(game);
-            }
-        });
+        initActionListeners();
 
         mainWindow.setFocusable(true);
         mainWindow.requestFocusInWindow();
@@ -59,14 +35,14 @@ public class MenuFrame {
         cardLevelDetails.setVisible(false);
     }
 
-    public static void goToMenu(){
+    public static void goToMenuFrame(){
         gameFrame.dispose();
 
         menuFrame.repaint();
         menuFrame.setVisible(true);
     }
 
-    public void goToGame(Game game){
+    private void goToGameFrame(Game game){
         gameFrame.setContentPane(new GameFrame(game).mainPanel);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setLocationRelativeTo(null);
@@ -78,6 +54,8 @@ public class MenuFrame {
         menuFrame.setVisible(false);
         btnContinue.setVisible(true);
     }
+
+
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new MainFrame());
@@ -104,6 +82,27 @@ public class MenuFrame {
 
     private void createUIComponents() {
         animateBusPanel = new MenuBusPanel();
+    }
+
+    private void initActionListeners(){
+        btnExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispatchEvent(new WindowEvent(menuFrame, WindowEvent.WINDOW_CLOSING));
+            }
+        });
+        btnContinue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goToGameFrame(gameSelectionService.load());
+            }
+        });
+        btnStartNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goToGameFrame(gameSelectionService.load(CityLevel.LEVEL_ONE));
+            }
+        });
     }
 
 }

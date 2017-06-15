@@ -1,4 +1,4 @@
-package pixel.bus.gui;
+package pixel.bus.gui.renderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

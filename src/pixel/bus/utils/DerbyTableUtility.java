@@ -13,9 +13,8 @@ public class DerbyTableUtility {
     private static final Path SQL_DESTROY = Paths.get("src/res/sql/tablesDestroy.sql");
     private static final Path SQL_CREATE = Paths.get("src/res/sql/tablesCreate.sql");
 
-    private static void execute() throws SQLException {
-
-            Connection con = DerbyConnectionUtility.getConnection();
+    public static void cleanAll() {
+        try (Connection con = DerbyConnectionUtility.getConnection()) {
 
             DatabaseMetaData dbmd = con.getMetaData();
             ResultSet rs = dbmd.getTables(null, "APP", null, null);
@@ -28,8 +27,10 @@ public class DerbyTableUtility {
 
             fileExecute(con, SQL_CREATE);
             System.out.println("Clear tables recreated");
-            con.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void fileExecute(Connection con, Path filePath){
@@ -47,7 +48,7 @@ public class DerbyTableUtility {
 
     }
 
-    public static void main(String[] args) throws SQLException {
-        execute();
+    public static void main(String[] args) {
+        cleanAll();
     }
 }
