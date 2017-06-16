@@ -13,16 +13,22 @@ import pixel.bus.utils.DerbyTableUtility;
 /**
  * Created by vanley on 15/06/2017.
  */
-public class GameLoaderService {
-
-
+public class GameLoaderFactory {
     private GameData gameData;
     private GameEngineService gameEngineService;
     private GameService gameService;
     private IPassengerDao passengerDao;
     private IStationDao stationDao;
 
-    public GameLoaderService() {
+    private static GameLoaderFactory instance = null;
+    protected GameLoaderFactory() {
+        // Exists only to defeat instantiation.
+    }
+    public static GameLoaderFactory getInstance() {
+        if(instance == null) {
+            instance = new GameLoaderFactory();
+        }
+        return instance;
     }
 
     public <T> T getInstance(Class<T> sClass) {

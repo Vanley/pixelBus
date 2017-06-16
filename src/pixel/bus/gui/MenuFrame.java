@@ -1,7 +1,7 @@
 package pixel.bus.gui;
 
 import pixel.bus.model.CityLevel;
-import pixel.bus.service.GameLoaderService;
+import pixel.bus.service.GameLoaderFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,10 +21,10 @@ public class MenuFrame {
     private JButton btnStartNew;
     private JButton btnExit;
 
-    private GameLoaderService gameLoaderService = new GameLoaderService();
+    private final GameLoaderFactory gameLoaderFactory = GameLoaderFactory.getInstance();
 
     public MenuFrame() {
-        btnContinue.setVisible(gameLoaderService.hasInstanceInDB());
+        btnContinue.setVisible(gameLoaderFactory.hasInstanceInDB());
 
         initActionListeners();
 
@@ -43,7 +43,7 @@ public class MenuFrame {
     }
 
     private void goToGameFrame(){
-        gameFrame.setContentPane(new GameFrame(gameLoaderService).mainPanel);
+        gameFrame.setContentPane(new GameFrame(gameLoaderFactory).mainPanel);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle("PIXEL BUS The Game");
@@ -94,14 +94,14 @@ public class MenuFrame {
         btnContinue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameLoaderService.load();
+                gameLoaderFactory.load();
                 goToGameFrame();
             }
         });
         btnStartNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameLoaderService.load(CityLevel.LEVEL_ONE);
+                gameLoaderFactory.load(CityLevel.LEVEL_ONE);
                 goToGameFrame();
             }
         });

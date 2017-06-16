@@ -3,6 +3,7 @@ package pixel.bus.dao.impl;
 import pixel.bus.dao.IGameDataDao;
 import pixel.bus.model.CityLevel;
 import pixel.bus.model.GameData;
+import pixel.bus.model.GameSpeedEnum;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.utils.DerbyConnectionUtility;
 
@@ -26,7 +27,7 @@ public class IGameDataDaoImpl implements IGameDataDao {
             if(cursor.next()){
                 GameData gameData = new GameData(
                         CityLevel.valueOf(cursor.getString("cityLevel")),
-                        cursor.getInt("gameSpeed"),
+                        GameSpeedEnum.valueOf(cursor.getString("gameSpeed")),
                         cursor.getInt("tick")
                 );
 
@@ -46,7 +47,7 @@ public class IGameDataDaoImpl implements IGameDataDao {
             stmt.setInt(1, 1);
             stmt.setString(2, gameData.getCityLevel().toString());
             stmt.setInt(3, GameEngineService.tick);
-            stmt.setInt(4, gameData.getGameSpeed());
+            stmt.setString(4, gameData.getGameSpeed().toString());
 
             return stmt.executeUpdate() > 0;
         }catch(Exception e){
@@ -63,7 +64,7 @@ public class IGameDataDaoImpl implements IGameDataDao {
             PreparedStatement stmt = conn.prepareStatement("UPDATE game_data SET cityLevel = ?, tick = ?, gameSpeed = ? WHERE id = 1");
             stmt.setString(1, gameData.getCityLevel().toString());
             stmt.setInt(2, GameEngineService.tick);
-            stmt.setInt(3, gameData.getGameSpeed());
+            stmt.setString(3, gameData.getGameSpeed().toString());
 
             return stmt.executeUpdate() > 0;
         }catch(Exception e){

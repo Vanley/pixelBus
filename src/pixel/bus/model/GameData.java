@@ -5,7 +5,7 @@ package pixel.bus.model;
  */
 public class GameData {
     private CityLevel cityLevel;
-    private int gameSpeed = 10;
+    private GameSpeedEnum gameSpeed = GameSpeedEnum.NORMAL;
     private int tick = 0;
 
     public GameData(CityLevel cityLevel) {
@@ -14,7 +14,7 @@ public class GameData {
 
     public GameData(
             CityLevel cityLevel,
-            int gameSpeed,
+            GameSpeedEnum gameSpeed,
             int tick) {
         this.cityLevel = cityLevel;
         this.gameSpeed = gameSpeed;
@@ -29,11 +29,11 @@ public class GameData {
         this.tick = tick;
     }
 
-    public int getGameSpeed() {
+    public GameSpeedEnum getGameSpeed() {
         return gameSpeed;
     }
 
-    public void setGameSpeed(int gameSpeed) {
+    public void setGameSpeed(GameSpeedEnum gameSpeed) {
         this.gameSpeed = gameSpeed;
     }
 

@@ -1,6 +1,7 @@
 package pixel.bus.service;
 
 import pixel.bus.model.GameData;
+import pixel.bus.model.GameSpeedEnum;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,11 +20,18 @@ public class GameEngineService implements ActionListener {
     public GameEngineService(GameData gameData) {
         this.gameData = gameData;
         tick = gameData.getTick();
-        setNewTimer(50);
+        timer = new Timer(gameData.getGameSpeed().getSpeed(), this);
     }
 
-    public void setNewTimer(int delay) {
-        timer = new Timer(delay * gameData.getGameSpeed(), this);
+    public void speed(GameSpeedEnum speedEnum){
+        if (!timer.isRunning())
+            unPause();
+        if(GameSpeedEnum.PAUSE.equals(speedEnum)){
+            pause();
+        } else {
+            gameData.setGameSpeed(speedEnum);
+            timer.setDelay(speedEnum.getSpeed());
+        }
     }
 
     public void unPause(){

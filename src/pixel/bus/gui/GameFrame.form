@@ -118,18 +118,18 @@
                       <toolTipText value="Pause"/>
                     </properties>
                   </component>
-                  <component id="6141a" class="javax.swing.JRadioButton" binding="radioButton3" default-binding="true">
-                    <constraints/>
-                    <properties>
-                      <text value="&gt;"/>
-                      <toolTipText value="Normal"/>
-                    </properties>
-                  </component>
                   <component id="9aa41" class="javax.swing.JRadioButton" binding="radioButton2" default-binding="true">
                     <constraints/>
                     <properties>
                       <text value="&gt;&gt;"/>
                       <toolTipText value="Quick"/>
+                    </properties>
+                  </component>
+                  <component id="6141a" class="javax.swing.JRadioButton" binding="radioButton3" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="&gt;"/>
+                      <toolTipText value="Normal"/>
                     </properties>
                   </component>
                   <component id="d5fc5" class="javax.swing.JRadioButton" binding="radioButton4" default-binding="true">
@@ -167,7 +167,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="f7a49" class="javax.swing.JTable" binding="table1" default-binding="true">
+                      <component id="f7a49" class="javax.swing.JTable" binding="tableAllPassengers" default-binding="true">
                         <constraints/>
                         <properties>
                           <autoCreateRowSorter value="true"/>
