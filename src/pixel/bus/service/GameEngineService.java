@@ -24,8 +24,9 @@ public class GameEngineService implements ActionListener {
     }
 
     public void speed(GameSpeedEnum speedEnum){
-        if (!timer.isRunning())
+        if (!timer.isRunning()) {
             unPause();
+        }
         if(GameSpeedEnum.PAUSE.equals(speedEnum)){
             pause();
         } else {
@@ -41,7 +42,6 @@ public class GameEngineService implements ActionListener {
     public void pause(){
         timer.stop();
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -20,13 +20,15 @@ public class GameFrame extends JFrame {
     private JPanel mapPanel;
     protected JTable tableAllPassengers;
     protected JScrollPane wrapper;
-    private JButton button1;
+    private JButton buttonGoToMainMenu;
     private JTable table2;
-    private JTable table3;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
-    private JRadioButton radioButton4;
+    private JTable labelTable;
+    private JRadioButton radioSpeed1;
+    private JRadioButton radioSpeed2;
+    private JRadioButton radioSpeed3;
+    private JRadioButton radioSpeed4;
+    private JLabel labelStationPassengerCount;
+    private JComboBox comboBoxStationSelect;
     private final GameLoaderFactory gameLoaderFactory;
 
     public GameFrame(final GameLoaderFactory gameLoaderFactory) {
@@ -34,49 +36,62 @@ public class GameFrame extends JFrame {
         gameLoaderFactory.getInstance(GameEngineService.class).unPause();
 
 
+        loadStationDetails();
+        loadStationDetailsPassengersControls();
+
+
+        //TABLE LOADERS
+        loadTableAllPassengers();
+
+        loadSettingsControls();
+        showSpeedControlGroup();
+
+
+
+    }
+
+    private void loadStationDetails() {
+//        comboBoxStationSelect.
+    }
+
+    private void loadStationDetailsPassengersControls() {
+        labelStationPassengerCount.setText("Count: " + 0);
+    }
+
+    private void loadSettingsControls() {
         mainPanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
-                if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    System.out.println("ESC pressed, opening main menu");
-
-                    gameLoaderFactory.unLoad();
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     MenuFrame.goToMenuFrame();
                     System.out.println("Closing Game window");
                 }
             }
         });
 
-        //TABLE LOADERS
-        loadTableAllPassengers();
 
         mainPanel.setFocusable(true);
         mainPanel.requestFocusInWindow();
-        button1.addActionListener(new ActionListener() {
+        buttonGoToMainMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("repaint tablle" + gameLoaderFactory.getInstance(GameData.class).getGameSpeed() + " -" + Station.getStations().size());
+                MenuFrame.goToMenuFrame();
+                System.out.println("Closing Game window");
             }
         });
-
-        showSpeedControlGroup();
     }
-
 
     private void showSpeedControlGroup(){
         ButtonGroup groupSpeedControl = new ButtonGroup();
-//        Action action = new ChangeSpeedAction(gameLoaderFactory.getInstance(GameData.class).getGameSpeed(), true);
-        radioButton1.setAction(new ChangeSpeedAction(GameSpeedEnum.PAUSE, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
-        radioButton2.setAction(new ChangeSpeedAction(GameSpeedEnum.NORMAL, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
-        radioButton3.setAction(new ChangeSpeedAction(GameSpeedEnum.FAST, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
-        radioButton4.setAction(new ChangeSpeedAction(GameSpeedEnum.EPIC, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
-        groupSpeedControl.add(radioButton1);
-        groupSpeedControl.add(radioButton2);
-        groupSpeedControl.add(radioButton3);
-        groupSpeedControl.add(radioButton4);
-
-        //TODO GameEngine service
+        radioSpeed1.setAction(new ChangeSpeedAction(GameSpeedEnum.PAUSE, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
+        radioSpeed2.setAction(new ChangeSpeedAction(GameSpeedEnum.NORMAL, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
+        radioSpeed3.setAction(new ChangeSpeedAction(GameSpeedEnum.FAST, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
+        radioSpeed4.setAction(new ChangeSpeedAction(GameSpeedEnum.EPIC, gameLoaderFactory.getInstance(GameData.class).getGameSpeed()));
+        groupSpeedControl.add(radioSpeed1);
+        groupSpeedControl.add(radioSpeed2);
+        groupSpeedControl.add(radioSpeed3);
+        groupSpeedControl.add(radioSpeed4);
     }
 
     private void createUIComponents() {

@@ -19,7 +19,7 @@ public class ChangeSpeedAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        System.out.println("key "+ GameSpeedEnum.valueOfAttribute(event.getActionCommand()) +" "+event );
+        System.out.println("Speed changed: "+ GameSpeedEnum.valueOfAttribute(event.getActionCommand()));
         GameLoaderFactory.getInstance()
                 .getInstance(GameEngineService.class)
                 .speed(GameSpeedEnum.valueOfAttribute(event.getActionCommand()));

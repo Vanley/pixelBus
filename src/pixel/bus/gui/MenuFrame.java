@@ -21,7 +21,7 @@ public class MenuFrame {
     private JButton btnStartNew;
     private JButton btnExit;
 
-    private final GameLoaderFactory gameLoaderFactory = GameLoaderFactory.getInstance();
+    private static final GameLoaderFactory gameLoaderFactory = GameLoaderFactory.getInstance();
 
     public MenuFrame() {
         btnContinue.setVisible(gameLoaderFactory.hasInstanceInDB());
@@ -35,7 +35,7 @@ public class MenuFrame {
     }
 
     public static void goToMenuFrame(){
-
+        gameLoaderFactory.unLoad();
         gameFrame.dispose();
 
         menuFrame.repaint();
@@ -45,17 +45,23 @@ public class MenuFrame {
     private void goToGameFrame(){
         gameFrame.setContentPane(new GameFrame(gameLoaderFactory).mainPanel);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle("PIXEL BUS The Game");
         gameFrame.pack();
-        gameFrame.setMinimumSize(new Dimension(200, 220));
+//        gameFrame.setLocationRelativeTo(null);
+//        gameFrame.setMinimumSize(new Dimension(200, 220));
+        centreWindow(gameFrame);
         gameFrame.setVisible(true);
 
         menuFrame.setVisible(false);
         btnContinue.setVisible(true);
     }
 
-
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+    }
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new MainFrame());

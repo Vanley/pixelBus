@@ -16,7 +16,7 @@ import java.util.List;
 public class Station extends Tile {
     private String imageLocation = "/res/img/city1.png";
 
-    private String name = "";
+    private String name = "Station ";
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
     private int stationSize = 0;
@@ -29,8 +29,8 @@ public class Station extends Tile {
     public Station (int x, int y) {
         super(x, y);
         this.setImage(imageLocation);
-
         stations.add(this);
+//        stations
         RoadConnection.connect(stations);
     }
 
