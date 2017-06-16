@@ -7,16 +7,15 @@ import java.awt.*;
 /**
  * Created by vanley on 14/06/2017.
  */
-public class CustomRenderer extends DefaultTableCellRenderer {
+public class CustomCellRenderer extends DefaultTableCellRenderer {
 
-    public CustomRenderer() {
+    public CustomCellRenderer() {
         super.setOpaque(true);
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
-
         if(value != null)
             super.setText(value.toString());
 
@@ -27,8 +26,6 @@ public class CustomRenderer extends DefaultTableCellRenderer {
 
         if (isSelected)
             super.setBackground(Color.GRAY);
-
-
         return this;
     }
 

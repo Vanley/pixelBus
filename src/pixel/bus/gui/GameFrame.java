@@ -1,10 +1,12 @@
 package pixel.bus.gui;
 
 import pixel.bus.gui.action_listener.ChangeSpeedAction;
-import pixel.bus.gui.renderer.CustomRenderer;
+import pixel.bus.gui.renderer.CustomCellRenderer;
+import pixel.bus.gui.renderer.ProgressCellRenderer;
 import pixel.bus.model.*;
 import pixel.bus.model.enu.GameSpeedEnum;
 import pixel.bus.model.gui.PassengerTableModel;
+import pixel.bus.model.gui.PassengersOnStationTableModel;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
@@ -23,7 +25,7 @@ public class GameFrame extends JFrame {
     protected JTable tableAllPassengers;
     protected JScrollPane wrapper;
     private JButton buttonGoToMainMenu;
-    private JTable table2;
+    private JTable tablePassengersOnStation;
     private JTable labelTable;
     private JRadioButton radioSpeed1;
     private JRadioButton radioSpeed2;
@@ -42,6 +44,8 @@ public class GameFrame extends JFrame {
     private final GameLoaderFactory gameLoaderFactory;
 
     private Station currentStation;
+    private PassengersOnStationTableModel passengersOnStationTableModel;
+    private static PassengerTableModel dtm;
 
     public GameFrame(final GameLoaderFactory gameLoaderFactory) {
         this.gameLoaderFactory = gameLoaderFactory;
@@ -96,6 +100,7 @@ public class GameFrame extends JFrame {
                 Station changeTo = stationService.getByName((String) comboBoxModel.getSelectedItem());
                 currentStation =  changeTo == null ? currentStation : changeTo;
                 loadStationDetails();
+                loadStationDetailsPassengersControls();
             }
         });
 
@@ -110,7 +115,11 @@ public class GameFrame extends JFrame {
     }
 
     private void loadStationDetailsPassengersControls() {
+        passengersOnStationTableModel = new PassengersOnStationTableModel((java.util.List<Passenger>) currentStation.getPassengerQueue());
+        tablePassengersOnStation.setModel(passengersOnStationTableModel);
 
+        tablePassengersOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
+        tablePassengersOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
     }
 
     private void loadSettingsControls() {
@@ -153,7 +162,6 @@ public class GameFrame extends JFrame {
         mapPanel = new MapPanel(city);
     }
 
-    private static PassengerTableModel dtm;
     public void loadTableAllPassengers() {
         wrapper.setBorder(
                 BorderFactory.createTitledBorder (
@@ -166,8 +174,8 @@ public class GameFrame extends JFrame {
         tableAllPassengers.setModel(pmodel);
         dtm = pmodel;
 
-        tableAllPassengers.setDefaultRenderer(Object.class, new CustomRenderer());
-        tableAllPassengers.setDefaultRenderer(Integer.class, new CustomRenderer());
+        tableAllPassengers.setDefaultRenderer(Object.class, new CustomCellRenderer());
+        tableAllPassengers.setDefaultRenderer(Integer.class, new CustomCellRenderer());
     }
 
     public static void addToTable(Passenger p) {
@@ -177,5 +185,6 @@ public class GameFrame extends JFrame {
 
     public void updateInfo() {
         loadStationDetails();
+        passengersOnStationTableModel.fireTableDataChanged();
     }
 }

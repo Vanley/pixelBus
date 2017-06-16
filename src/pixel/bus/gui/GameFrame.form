@@ -167,7 +167,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="c9375" class="javax.swing.JTable" binding="table2" default-binding="true">
+                          <component id="c9375" class="javax.swing.JTable" binding="tablePassengersOnStation">
                             <constraints/>
                             <properties/>
                           </component>

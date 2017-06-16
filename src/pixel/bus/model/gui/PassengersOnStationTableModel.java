@@ -1,28 +1,31 @@
 package pixel.bus.model.gui;
 
 import pixel.bus.model.Passenger;
+import pixel.bus.service.GameEngineService;
+import pixel.bus.service.GameLoaderFactory;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * Created by vanley on 13/06/2017.
+ * Created by vanley on 16/06/2017.
  */
-public class PassengerTableModel extends AbstractTableModel {
+public class PassengersOnStationTableModel extends AbstractTableModel {
 
     private final List<Passenger> passengerList;
 
     private final String[] columnNames = new String[] {
-        "tickOfArrival",
-        "willWaitTo",
-        "destination"
+            "Arrived",
+            "Will Wait",
+            "Happines",
+            "Destination"
     };
 
     private final Class[] columnClass = new Class[] {
-        Integer.class, Integer.class, String.class
+            String.class, String.class, Integer.class, String.class
     };
 
-    public PassengerTableModel (List<Passenger> passengerList){
+    public PassengersOnStationTableModel (List<Passenger> passengerList){
         this.passengerList = passengerList;
     }
 
@@ -55,15 +58,17 @@ public class PassengerTableModel extends AbstractTableModel {
     {
         Passenger row = passengerList.get(rowIndex);
         if(0 == columnIndex) {
-            return row.getTickOfArrival();
+            return "" + row.getTickOfArrival();
         }
         else if(1 == columnIndex) {
-            return row.getWillWaitTo();
+            return "" + (row.getWillWaitTo() - GameEngineService.tick);
         }
         else if(2 == columnIndex) {
-            return row.getDestination();
+            return row.getWillWaitTo() - GameEngineService.tick;
+        }
+        else if(3 == columnIndex) {
+            return "Everywhere"; // + row.getDestination();
         }
         return null;
     }
-
 }
