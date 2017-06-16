@@ -1,5 +1,7 @@
 package pixel.bus.model;
 
+import pixel.bus.model.enu.VehicleEnum;
+
 /**
  * Created by vanley on 21/05/2017.
  */

@@ -1,6 +1,6 @@
-package pixel.bus.gui;
+package pixel.bus.gui.action_listener;
 
-import pixel.bus.model.GameSpeedEnum;
+import pixel.bus.model.enu.GameSpeedEnum;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
 

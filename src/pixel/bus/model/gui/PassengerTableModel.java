@@ -1,4 +1,4 @@
-package pixel.bus.model;
+package pixel.bus.model.gui;
 
 import pixel.bus.model.Passenger;
 

@@ -6,9 +6,12 @@ import pixel.bus.dao.IPassengerDao;
 import pixel.bus.dao.IStationDao;
 import pixel.bus.dao.impl.IPassengerDaoImpl;
 import pixel.bus.dao.impl.IStationDaoImpl;
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.CityLevel;
 import pixel.bus.model.GameData;
 import pixel.bus.utils.DerbyTableUtility;
+
+import java.awt.*;
 
 /**
  * Created by vanley on 15/06/2017.
@@ -17,6 +20,10 @@ public class GameLoaderFactory {
     private GameData gameData;
     private GameEngineService gameEngineService;
     private GameService gameService;
+    private StationService stationService;
+
+    private GameFrame gameFrame;
+
     private IPassengerDao passengerDao;
     private IStationDao stationDao;
 
@@ -36,8 +43,12 @@ public class GameLoaderFactory {
             return (T) gameData;
         } else if (sClass == GameEngineService.class) {
             return (T) gameEngineService;
+        } else if (sClass == GameFrame.class) {
+            return (T) gameFrame;
         } else if (sClass == GameService.class) {
             return (T) gameService;
+        } else if (sClass == StationService.class) {
+            return (T) stationService;
         } else if (sClass == IPassengerDao.class) {
             return (T) passengerDao;
         } else if (sClass == IStationDao.class) {
@@ -64,6 +75,7 @@ public class GameLoaderFactory {
 
         gameData = gameDataDao.read();
         gameEngineService = new GameEngineService(gameData);
+        stationService = new StationService();
 
 
 //        gameService = new GameService();
@@ -88,6 +100,11 @@ public class GameLoaderFactory {
 
         gameData = null;
         gameEngineService = null;
+        stationService = null;
 
+    }
+
+    public void injectGameFrame(GameFrame gameFrame) {
+        this.gameFrame = gameFrame;
     }
 }

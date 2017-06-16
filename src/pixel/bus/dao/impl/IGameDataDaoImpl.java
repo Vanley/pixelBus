@@ -3,7 +3,7 @@ package pixel.bus.dao.impl;
 import pixel.bus.dao.IGameDataDao;
 import pixel.bus.model.CityLevel;
 import pixel.bus.model.GameData;
-import pixel.bus.model.GameSpeedEnum;
+import pixel.bus.model.enu.GameSpeedEnum;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.utils.DerbyConnectionUtility;
 

@@ -26,6 +26,8 @@ public class MenuFrame {
     public MenuFrame() {
         btnContinue.setVisible(gameLoaderFactory.hasInstanceInDB());
 
+
+
         initActionListeners();
 
         mainWindow.setFocusable(true);
@@ -43,7 +45,9 @@ public class MenuFrame {
     }
 
     private void goToGameFrame(){
-        gameFrame.setContentPane(new GameFrame(gameLoaderFactory).mainPanel);
+        GameFrame gameF = new GameFrame(gameLoaderFactory);
+        gameLoaderFactory.injectGameFrame(gameF);
+        gameFrame.setContentPane(gameF.mainPanel);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setTitle("PIXEL BUS The Game");
         gameFrame.pack();

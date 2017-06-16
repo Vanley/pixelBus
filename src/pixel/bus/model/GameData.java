@@ -1,5 +1,7 @@
 package pixel.bus.model;
 
+import pixel.bus.model.enu.GameSpeedEnum;
+
 /**
  * Created by vanley on 15/06/2017.
  */

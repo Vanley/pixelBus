@@ -1,4 +1,4 @@
-package pixel.bus.model;
+package pixel.bus.model.enu;
 
 /**
  * Created by vanley on 21/05/2017.

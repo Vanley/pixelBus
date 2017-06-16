@@ -3,6 +3,8 @@ package pixel.bus.gui;
 import pixel.bus.model.*;
 import pixel.bus.model.map.Tile;
 import pixel.bus.service.GameEngineService;
+import pixel.bus.service.GameLoaderFactory;
+import pixel.bus.service.StationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +44,7 @@ public class MapPanel extends JPanel implements ActionListener {
     }
 
     private void paintCityForeGround(Graphics g) {
-        for (Station station : Station.getStations()){
+        for (Station station : GameLoaderFactory.getInstance().getInstance(StationService.class).getStations()){
             station.animate(g);
             g.drawImage(station.getImage(), station.getX(), station.getY(), this);
         }

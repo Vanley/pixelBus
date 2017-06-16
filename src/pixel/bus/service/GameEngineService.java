@@ -1,13 +1,12 @@
 package pixel.bus.service;
 
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.GameData;
-import pixel.bus.model.GameSpeedEnum;
+import pixel.bus.model.enu.GameSpeedEnum;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static pixel.bus.model.Station.queuePassengers;
 
 /**
  * Created by vanley on 15/06/2017.
@@ -46,6 +45,7 @@ public class GameEngineService implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         tick++;
-        queuePassengers();
+        GameLoaderFactory.getInstance().getInstance(StationService.class).queuePassengers();
+        GameLoaderFactory.getInstance().getInstance(GameFrame.class).updateInfo();
     }
 }

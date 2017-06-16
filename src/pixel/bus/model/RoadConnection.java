@@ -1,5 +1,8 @@
 package pixel.bus.model;
 
+import pixel.bus.service.GameLoaderFactory;
+import pixel.bus.service.StationService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +35,14 @@ public class RoadConnection {
         return roads;
     }
 
-    public static void connect(List<Station> stations){
+    public static void connect() {
+        List<Station> stations = GameLoaderFactory.getInstance()
+                .getInstance(StationService.class).getStations();
         if (stations.size() > 1) {
             new RoadConnection(
                     stations.get(0),
                     stations.get(stations.size()-1)
             );
         }
-    };
+    }
 }

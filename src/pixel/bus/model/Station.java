@@ -2,7 +2,8 @@ package pixel.bus.model;
 
 import pixel.bus.gui.GameFrame;
 import pixel.bus.model.map.Tile;
-import pixel.bus.utils.RandomFromRange;
+import pixel.bus.service.GameLoaderFactory;
+import pixel.bus.service.StationService;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -20,26 +21,28 @@ public class Station extends Tile {
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
     private int stationSize = 0;
-
-
-    private static List<Station> stations = new ArrayList<>();
+    private int totalPassengersIn = 0;
+    private int totalPassengersLeft = 0;
 
     private Queue<Passenger> passengerQueue = new LinkedList<>();
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public Station (int x, int y) {
         super(x, y);
+        name = name + GameLoaderFactory.getInstance()
+                .getInstance(StationService.class).getStations().size();
         this.setImage(imageLocation);
-        stations.add(this);
-//        stations
-        RoadConnection.connect(stations);
-    }
-
-    public static List<Station> getStations() {
-        return stations;
+        GameLoaderFactory.getInstance()
+                .getInstance(StationService.class).addStation(this);
+        RoadConnection.connect();
     }
 
     public Queue<Passenger> getPassengerQueue() {
         return passengerQueue;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
     public void addPassenger(){
@@ -52,38 +55,49 @@ public class Station extends Tile {
         while (amount > 0){
             addPassenger();
             amount--;
+            totalPassengersIn++;
         }
     }
 
-    private void checkPassengers() {
-        Iterator<Passenger> iterator = passengerQueue.iterator();
-        for (Iterator<Passenger> it = passengerQueue.iterator(); it.hasNext(); ) {
-            Passenger aValue = it.next();
-            if(!aValue.isWaiting()) {
-                it.remove();
-            }
-        }
+
+    public String getName() {
+        return name;
     }
 
-    private void scheduleNextPassengers(){
-        int min = 0;
-        int max = 100;
-        int integerFromRange = RandomFromRange.get(min, max);
-        int integerFromRange2 = RandomFromRange.get(min, max);
-        nextPassengersIn = (integerFromRange * integerFromRange2)/100 - stationSize;
-        nextPassengersAmount = integerFromRange * integerFromRange2/1000 + stationSize;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static void queuePassengers(){
-        for(Station station : stations){
-            station.checkPassengers();
-            if (station.nextPassengersIn == 0){
-                station.addPassengerGroup(station.nextPassengersAmount);
-                station.scheduleNextPassengers();
-            } else {
-                station.nextPassengersIn--;
-            }
-        }
+    public int getNextPassengersIn() {
+        return nextPassengersIn;
+    }
+
+    public void setNextPassengersIn(int nextPassengersIn) {
+        this.nextPassengersIn = nextPassengersIn;
+    }
+
+    public int getNextPassengersAmount() {
+        return nextPassengersAmount;
+    }
+
+    public void setNextPassengersAmount(int nextPassengersAmount) {
+        this.nextPassengersAmount = nextPassengersAmount;
+    }
+
+    public int getStationSize() {
+        return stationSize;
+    }
+
+    public int getTotalPassengersIn() {
+        return totalPassengersIn;
+    }
+
+    public int getTotalPassengersLeft() {
+        return totalPassengersLeft;
+    }
+
+    public void addTotalPassengersLeft(int totalPassengersLeft) {
+        this.totalPassengersLeft += totalPassengersLeft;
     }
 
     @Override
