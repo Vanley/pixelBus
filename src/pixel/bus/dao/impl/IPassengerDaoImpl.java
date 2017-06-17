@@ -7,6 +7,7 @@ import pixel.bus.utils.DerbyConnectionUtility;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -26,6 +27,29 @@ public class IPassengerDaoImpl implements IPassengerDao {
             PreparedStatement stmt = conn.prepareStatement("select * from passengers where onStation = ? and willWaitTo >= ?");
             stmt.setInt(1, stationId);
             stmt.setInt(2, tick);
+            ResultSet cursor = stmt.executeQuery();
+
+            while(cursor.next()) {
+                Passenger p = new Passenger(
+                        cursor.getInt("tickOfArrival"),
+                        cursor.getInt("willWaitTo"),
+                        cursor.getString("destination")
+                );
+                result.add(p);
+            }
+            return result;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Passenger> getAll() {
+        try (Connection conn = DerbyConnectionUtility.getConnection()){
+            List<Passenger> result = new ArrayList<>();
+
+            PreparedStatement stmt = conn.prepareStatement("select * from passengers");
             ResultSet cursor = stmt.executeQuery();
 
             while(cursor.next()) {

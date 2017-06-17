@@ -10,7 +10,6 @@ import java.util.List;
  * Created by vanley on 29/05/2017.
  */
 public class Passenger {
-    public static final List<Passenger> passengerList = new ArrayList<>();
 
     private int tickOfArrival;
     private int willWaitTo;

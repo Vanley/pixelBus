@@ -41,11 +41,12 @@ public class GameFrame extends JFrame {
     private JButton buttonStationNameEdit;
     private JButton buttonStationNameConfirm;
     private JPanel panelStationName;
+    private JButton logButton;
     private final GameLoaderFactory gameLoaderFactory;
+
 
     private Station currentStation;
     private PassengersOnStationTableModel passengersOnStationTableModel;
-    private static PassengerTableModel dtm;
 
     public GameFrame(final GameLoaderFactory gameLoaderFactory) {
         this.gameLoaderFactory = gameLoaderFactory;
@@ -57,7 +58,6 @@ public class GameFrame extends JFrame {
         loadStationDetailsPassengersControls();
 
         //TABLE LOADERS
-        loadTableAllPassengers();
 
         loadSettingsControls();
         showSpeedControlGroup();
@@ -85,6 +85,7 @@ public class GameFrame extends JFrame {
                 loadStationPicker();
             }
         });
+
     }
 
     private void loadStationPicker() {
@@ -143,6 +144,19 @@ public class GameFrame extends JFrame {
                 System.out.println("Closing Game window");
             }
         });
+        logButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final JDialog dialog = new ActionLog();
+                dialog.setLocationRelativeTo(null);
+                dialog.setDefaultCloseOperation(
+                        JDialog.DO_NOTHING_ON_CLOSE);
+
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        });
+
     }
 
     private void showSpeedControlGroup(){
@@ -162,26 +176,6 @@ public class GameFrame extends JFrame {
         mapPanel = new MapPanel(city);
     }
 
-    public void loadTableAllPassengers() {
-        wrapper.setBorder(
-                BorderFactory.createTitledBorder (
-                        BorderFactory.createEtchedBorder (),
-                        "Table Title",
-                        TitledBorder.LEADING,
-                        TitledBorder.TOP));
-
-        PassengerTableModel pmodel = new PassengerTableModel(Passenger.passengerList);
-        tableAllPassengers.setModel(pmodel);
-        dtm = pmodel;
-
-        tableAllPassengers.setDefaultRenderer(Object.class, new CustomCellRenderer());
-        tableAllPassengers.setDefaultRenderer(Integer.class, new CustomCellRenderer());
-    }
-
-    public static void addToTable(Passenger p) {
-        Passenger.passengerList.add(p);
-        dtm.fireTableDataChanged();
-    }
 
     public void updateInfo() {
         loadStationDetails();

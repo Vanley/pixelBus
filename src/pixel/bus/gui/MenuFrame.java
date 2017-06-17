@@ -70,6 +70,7 @@ public class MenuFrame {
 
     }
 
+
     static class MainFrame implements Runnable {
         @Override
         public void run() {
@@ -114,44 +115,15 @@ public class MenuFrame {
             }
         });
 
-
-        gameFrame.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.out.println("WindowListener method called: windowClosing.");
-                goToMenuFrame();
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                System.out.println("WindowListener method called: windowClosed.");
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-
+        gameFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                JOptionPane.showMessageDialog(gameFrame,
+                        "Please exit thru Menu.",
+                        "Do you want to loose your progress?",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
+
     }
 
 }

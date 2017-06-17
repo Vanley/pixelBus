@@ -11,6 +11,8 @@ import pixel.bus.service.StationService;
 import pixel.bus.utils.RandomFromRange;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * Created by vanley on 21/05/2017.
  */
-public class Station extends Tile {
+public class Station extends Tile{
     private static String imageLocation = "/res/img/city/city0.png";
     private static String[] imageLocations = new String[]{
             "/res/img/city/city1.png",
@@ -68,7 +70,6 @@ public class Station extends Tile {
     public void addPassenger(){
         Passenger p = new Passenger();
         passengerQueue.add(p);
-        GameFrame.addToTable(p);
         IPassengerDao passengerDao = DaoFactory.getInstance(IPassengerDao.class);
         passengerDao.create(p, id);
     }
