@@ -14,7 +14,7 @@ public class ProgressCellRenderer extends JProgressBar implements TableCellRende
         int progress = 0;
 
         if (value instanceof Integer) {
-            progress = (int) value * 2;
+            progress = (int) value;
         }
 
         setValue(progress);

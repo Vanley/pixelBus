@@ -4,9 +4,7 @@ import pixel.bus.dao.DaoFactory;
 import pixel.bus.dao.IPassengerDao;
 import pixel.bus.gui.renderer.CustomCellRenderer;
 import pixel.bus.model.Passenger;
-import pixel.bus.model.Vehicle;
 import pixel.bus.model.gui.PassengerTableModel;
-import pixel.bus.service.GameEngineService;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -15,7 +13,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionLog extends JDialog {
+public class ActionLogDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonRefresh;
     private JButton buttonClose;
@@ -25,7 +23,7 @@ public class ActionLog extends JDialog {
     private List<Passenger> passengerList = passengerDao.getAll();
     private PassengerTableModel pmodel = new PassengerTableModel(passengerList);
 
-    public ActionLog() {
+    public ActionLogDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonRefresh);
@@ -86,7 +84,7 @@ public class ActionLog extends JDialog {
     }
 
     public static void main(String[] args) {
-        ActionLog dialog = new ActionLog();
+        ActionLogDialog dialog = new ActionLogDialog();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

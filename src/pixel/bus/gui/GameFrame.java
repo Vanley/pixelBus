@@ -5,16 +5,16 @@ import pixel.bus.gui.renderer.CustomCellRenderer;
 import pixel.bus.gui.renderer.ProgressCellRenderer;
 import pixel.bus.model.*;
 import pixel.bus.model.enu.GameSpeedEnum;
-import pixel.bus.model.gui.PassengerTableModel;
 import pixel.bus.model.gui.PassengersOnStationTableModel;
+import pixel.bus.model.gui.VehiclesOnStationTableModel;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 /**
  * Created by vanley on 07/06/2017.
@@ -26,7 +26,7 @@ public class GameFrame extends JFrame {
     protected JScrollPane wrapper;
     private JButton buttonGoToMainMenu;
     private JTable tablePassengersOnStation;
-    private JTable labelTable;
+    private JTable tableVehiclesOnStation;
     private JRadioButton radioSpeed1;
     private JRadioButton radioSpeed2;
     private JRadioButton radioSpeed3;
@@ -42,11 +42,13 @@ public class GameFrame extends JFrame {
     private JButton buttonStationNameConfirm;
     private JPanel panelStationName;
     private JButton logButton;
+    private JButton buttonBuy;
     private final GameLoaderFactory gameLoaderFactory;
 
 
     private Station currentStation;
     private PassengersOnStationTableModel passengersOnStationTableModel;
+    private VehiclesOnStationTableModel vehiclesOnStationTableModel;
 
     public GameFrame(final GameLoaderFactory gameLoaderFactory) {
         this.gameLoaderFactory = gameLoaderFactory;
@@ -56,12 +58,10 @@ public class GameFrame extends JFrame {
         loadStationPicker();
         loadStationDetails();
         loadStationDetailsPassengersControls();
-
-        //TABLE LOADERS
+        loadStationDetailsVehiclesControls();
 
         loadSettingsControls();
         showSpeedControlGroup();
-
 
         //edit station name
         buttonStationNameEdit.addActionListener(new ActionListener() {
@@ -86,6 +86,19 @@ public class GameFrame extends JFrame {
             }
         });
 
+        buttonBuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final JDialog dialog = new BusBuyDialog();
+                dialog.setLocationRelativeTo(null);
+                dialog.setDefaultCloseOperation(
+                        JDialog.DO_NOTHING_ON_CLOSE);
+
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        });
+
     }
 
     private void loadStationPicker() {
@@ -102,6 +115,7 @@ public class GameFrame extends JFrame {
                 currentStation =  changeTo == null ? currentStation : changeTo;
                 loadStationDetails();
                 loadStationDetailsPassengersControls();
+                loadStationDetailsVehiclesControls();
             }
         });
 
@@ -116,11 +130,19 @@ public class GameFrame extends JFrame {
     }
 
     private void loadStationDetailsPassengersControls() {
-        passengersOnStationTableModel = new PassengersOnStationTableModel((java.util.List<Passenger>) currentStation.getPassengerQueue());
+        passengersOnStationTableModel = new PassengersOnStationTableModel((List<Passenger>) currentStation.getPassengerQueue());
         tablePassengersOnStation.setModel(passengersOnStationTableModel);
 
         tablePassengersOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
         tablePassengersOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
+    }
+
+    private void loadStationDetailsVehiclesControls() {
+        vehiclesOnStationTableModel = new VehiclesOnStationTableModel(currentStation.getVehicles());
+        tableVehiclesOnStation.setModel(vehiclesOnStationTableModel);
+
+        tableVehiclesOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
+        tableVehiclesOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
     }
 
     private void loadSettingsControls() {
@@ -144,10 +166,11 @@ public class GameFrame extends JFrame {
                 System.out.println("Closing Game window");
             }
         });
+
         logButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JDialog dialog = new ActionLog();
+                final JDialog dialog = new ActionLogDialog();
                 dialog.setLocationRelativeTo(null);
                 dialog.setDefaultCloseOperation(
                         JDialog.DO_NOTHING_ON_CLOSE);
@@ -180,5 +203,10 @@ public class GameFrame extends JFrame {
     public void updateInfo() {
         loadStationDetails();
         passengersOnStationTableModel.fireTableDataChanged();
+        vehiclesOnStationTableModel.fireTableDataChanged();
+    }
+
+    public Station getCurrentStation() {
+        return currentStation;
     }
 }

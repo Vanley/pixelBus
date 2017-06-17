@@ -64,7 +64,7 @@ public class PassengersOnStationTableModel extends AbstractTableModel {
             return "" + (row.getWillWaitTo() - GameEngineService.tick);
         }
         else if(2 == columnIndex) {
-            return row.getWillWaitTo() - GameEngineService.tick;
+            return (row.getWillWaitTo() - GameEngineService.tick) * 2;  //decrease bar when its below 50 (as passengers are happy on start and get annoyed and left )
         }
         else if(3 == columnIndex) {
             return "Everywhere"; // + row.getDestination();

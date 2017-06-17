@@ -27,4 +27,39 @@ public class Vehicle {
         this.name = type.getName();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCapacityCurrent() {
+        return capacityCurrent;
+    }
+
+    public void setCapacityCurrent(int capacityCurrent) {
+        this.capacityCurrent = capacityCurrent;
+    }
+
+    public VehicleEnum getType() {
+        return type;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getRunningCost() {
+        return runningCost;
+    }
+
+    public int getStandingCost() {
+        return standingCost;
+    }
 }

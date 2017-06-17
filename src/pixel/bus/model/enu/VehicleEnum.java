@@ -61,4 +61,8 @@ public enum VehicleEnum {
         return standingCost;
     }
 
+    public String toString() {
+        return this.name + " Capacity:" + this.capacity + " Price:" +this.initialPrice;
+    }
+
 }

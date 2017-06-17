@@ -4,6 +4,7 @@ import pixel.bus.dao.DaoFactory;
 import pixel.bus.dao.IPassengerDao;
 import pixel.bus.dao.IStationDao;
 import pixel.bus.gui.GameFrame;
+import pixel.bus.model.enu.VehicleEnum;
 import pixel.bus.model.map.Tile;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
@@ -80,6 +81,13 @@ public class Station extends Tile{
             amount--;
             totalPassengersIn++;
         }
+    }
+
+    public void addVehicle(VehicleEnum selectedVehicle) {
+        Vehicle v = new Vehicle(selectedVehicle);
+        vehicles.add(v);
+        //todo substract money
+        //todo add to DB
     }
 
     public int getId() {
@@ -161,7 +169,12 @@ public class Station extends Tile{
 
     private void animateDrawPassengerCountBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(new Color(200, 200, 200));
+        Station currentStation = GameLoaderFactory.getInstance().getInstance(GameFrame.class).getCurrentStation();
+        if(currentStation != null && currentStation.equals(this)){
+            g2d.setColor(new Color(18, 169, 180));
+        } else {
+            g2d.setColor(new Color(180, 180, 180));
+        }
         for (RoadConnection road : RoadConnection.getRoads()) {
             Rectangle2D rect = new Rectangle(
                     getX(),
@@ -186,10 +199,18 @@ public class Station extends Tile{
                 getY() + getTileSize() - 8,
                 getTileSize(),
                 8);
-        g2d.setColor(new Color(180, 180, 180));
+
+        Station currentStation = GameLoaderFactory.getInstance().getInstance(GameFrame.class).getCurrentStation();
+        if(currentStation != null && currentStation.equals(this)){
+            g2d.setColor(new Color(39, 145, 180));
+        } else {
+            g2d.setColor(new Color(180, 180, 180));
+        }
+
         g2d.fill(ellip);
         g2d.draw(ellip);
         g2d.dispose();
     }
+
 
 }
