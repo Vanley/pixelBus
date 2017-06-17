@@ -8,6 +8,7 @@ import pixel.bus.model.map.Tile;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
+import pixel.bus.utils.RandomFromRange;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -19,7 +20,17 @@ import java.util.List;
  * Created by vanley on 21/05/2017.
  */
 public class Station extends Tile {
-    private String imageLocation = "/res/img/city1.png";
+    private static String imageLocation = "/res/img/city/city0.png";
+    private static String[] imageLocations = new String[]{
+            "/res/img/city/city1.png",
+            "/res/img/city/city2.png",
+            "/res/img/city/city3.png",
+            "/res/img/city/city4.png",
+            "/res/img/city/city5.png",
+            "/res/img/city/city6.png",
+            "/res/img/city/city7.png",
+            "/res/img/city/city8.png",
+            "/res/img/city/city9.png"};
 
     private int id;
     private String name = "Station ";
@@ -128,9 +139,23 @@ public class Station extends Tile {
 
     @Override
     public void animate(Graphics g) {
+        animateBuilding(g);
         animateDrawPassengerCountBackground(g);
         animateDrawTownEllipse(g);
         animateDrawPassengerCount(g);
+    }
+
+    private void animateBuilding(Graphics g) {
+        if (next == 0) {
+            this.setImage(imageLocations[RandomFromRange.get(0, 8)]);
+            //sequential
+//            this.setImage(imageLocations[current]);
+//            current++;
+//            if(current >= imageLocations.length)
+//                current = 0;
+            next = RandomFromRange.get(5, 50);
+        }
+        next--;
     }
 
     private void animateDrawPassengerCountBackground(Graphics g) {

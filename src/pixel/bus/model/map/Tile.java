@@ -18,6 +18,8 @@ public abstract class Tile {
     private int x;
     private int y;
     private Image image;
+    protected int next;
+    protected int current;
 
     public Tile(int x, int y) {
         this.x = x;
