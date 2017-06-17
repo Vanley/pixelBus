@@ -26,8 +26,6 @@ public class MenuFrame {
     public MenuFrame() {
         btnContinue.setVisible(gameLoaderFactory.hasInstanceInDB());
 
-
-
         initActionListeners();
 
         mainWindow.setFocusable(true);
@@ -48,7 +46,7 @@ public class MenuFrame {
         GameFrame gameF = new GameFrame(gameLoaderFactory);
         gameLoaderFactory.injectGameFrame(gameF);
         gameFrame.setContentPane(gameF.mainPanel);
-        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         gameFrame.setTitle("PIXEL BUS The Game");
         gameFrame.pack();
 //        gameFrame.setLocationRelativeTo(null);
@@ -113,6 +111,45 @@ public class MenuFrame {
             public void actionPerformed(ActionEvent e) {
                 gameLoaderFactory.load(CityLevel.LEVEL_ONE);
                 goToGameFrame();
+            }
+        });
+
+
+        gameFrame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("WindowListener method called: windowClosing.");
+                goToMenuFrame();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.out.println("WindowListener method called: windowClosed.");
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
             }
         });
     }
