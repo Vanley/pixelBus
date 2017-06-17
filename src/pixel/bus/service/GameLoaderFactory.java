@@ -1,14 +1,12 @@
 package pixel.bus.service;
 
-import pixel.bus.dao.DaoFactory;
-import pixel.bus.dao.IGameDataDao;
-import pixel.bus.dao.IPassengerDao;
-import pixel.bus.dao.IStationDao;
+import pixel.bus.dao.*;
 import pixel.bus.dao.impl.IPassengerDaoImpl;
 import pixel.bus.dao.impl.IStationDaoImpl;
 import pixel.bus.gui.GameFrame;
 import pixel.bus.model.CityLevel;
 import pixel.bus.model.GameData;
+import pixel.bus.model.Station;
 import pixel.bus.utils.DerbyTableUtility;
 
 import java.awt.*;
@@ -24,11 +22,12 @@ public class GameLoaderFactory {
 
     private GameFrame gameFrame;
 
-    private IPassengerDao passengerDao;
-    private IStationDao stationDao;
+    private final IGameDataDao gameDataDao = DaoFactory.getInstance(IGameDataDao.class);
+    private final IStationDao stationDao = DaoFactory.getInstance(IStationDao.class);
 
     private static GameLoaderFactory instance = null;
-    protected GameLoaderFactory() {
+
+    private GameLoaderFactory() {
         // Exists only to defeat instantiation.
     }
     public static GameLoaderFactory getInstance() {
@@ -49,44 +48,30 @@ public class GameLoaderFactory {
             return (T) gameService;
         } else if (sClass == StationService.class) {
             return (T) stationService;
-        } else if (sClass == IPassengerDao.class) {
-            return (T) passengerDao;
-        } else if (sClass == IStationDao.class) {
-            return (T) stationDao;
         } else {
             return null;
         }
     }
 
 
-    private final IGameDataDao gameDataDao = DaoFactory.getInstance(IGameDataDao.class);
-
     public boolean hasInstanceInDB() {
         return gameDataDao.isSaved();
     }
 
-
-
     public void load() {
-        //TODO load all instances from DB
-        //always load from db everything
-        //simply sometimes wipe db before loading
-
-
         gameData = gameDataDao.read();
         gameEngineService = new GameEngineService(gameData);
         stationService = new StationService();
 
-
 //        gameService = new GameService();
-//        passengerDao = new IPassengerDaoImpl();
-//        stationDao = new IStationDaoImpl();
+
+        //TODO load from DB
 
     }
 
     public void load(CityLevel cityLevel) {
         DerbyTableUtility.cleanAll();
-
+        GameEngineService.tick = 0;
         gameData = new GameData(cityLevel);
         gameDataDao.create(gameData);
 
@@ -97,11 +82,12 @@ public class GameLoaderFactory {
     public void unLoad() {
         gameEngineService.pause();
         gameDataDao.create(gameData);
+        stationDao.create(stationService.getStations());
+        //passengers saved in runtime
 
         gameData = null;
         gameEngineService = null;
         stationService = null;
-
     }
 
     public void injectGameFrame(GameFrame gameFrame) {

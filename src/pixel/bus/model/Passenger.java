@@ -21,6 +21,12 @@ public class Passenger {
         this.willWaitTo = tickOfArrival + generateWillWaitTo();
     }
 
+    public Passenger(int tickOfArrival, int willWaitTo, String destination) {
+        this.tickOfArrival = tickOfArrival;
+        this.willWaitTo = willWaitTo;
+        this.destination = destination;
+    }
+
     public boolean isWaiting() {
         return GameEngineService.tick < willWaitTo;
     }

@@ -17,7 +17,7 @@ public class PassengersOnStationTableModel extends AbstractTableModel {
     private final String[] columnNames = new String[] {
             "Arrived",
             "Will Wait",
-            "Happines",
+            "Happiness",
             "Destination"
     };
 

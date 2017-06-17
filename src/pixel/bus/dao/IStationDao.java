@@ -10,11 +10,13 @@ import java.util.List;
 public interface IStationDao extends IDao {
     public List<Station> getAll();
 
-    public Station read(String id);
+    public Station read(Station station);
 
     public boolean create(Station station);
 
-    public boolean update(String id, Station station);
+    public void create(List<Station> stations);
+
+    public boolean update(Station station);
 
     public boolean delete(String id);
 }

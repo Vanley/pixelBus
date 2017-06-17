@@ -107,11 +107,11 @@ public class GameFrame extends JFrame {
     }
 
     private void loadStationDetails() {
-        labelStationName.setText(currentStation.getName());
+        labelStationName.setText("Name: " + currentStation.getName());
         labelStationLevel.setText("Station Level: " + currentStation.getStationSize());
-        labelStationPassengers.setText("Passengers: " + currentStation.getPassengerQueue().size() + " in area:" + currentStation.getNextPassengersAmount() + " (in " + currentStation.getNextPassengersIn() + ")");
-        labelPassengersTotal.setText("Passengers totals: " + currentStation.getTotalPassengersIn() + " left: " + currentStation.getTotalPassengersLeft());
-        labelStationVehicles.setText("Vehicles: " + currentStation.getVehicles().size());
+        labelStationPassengers.setText("Passengers queue: " + currentStation.getPassengerQueue().size() + "  ( " + currentStation.getNextPassengersAmount() + " more in " + currentStation.getNextPassengersIn() + " ticks)");
+        labelPassengersTotal.setText("Lifetime passengers: " + currentStation.getTotalPassengersIn() + "; Not taken: " + currentStation.getTotalPassengersLeft());
+        labelStationVehicles.setText("Vehicles idle: " + currentStation.getVehicles().size());
     }
 
     private void loadStationDetailsPassengersControls() {

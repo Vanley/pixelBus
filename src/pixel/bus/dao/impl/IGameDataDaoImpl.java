@@ -51,7 +51,6 @@ public class IGameDataDaoImpl implements IGameDataDao {
 
             return stmt.executeUpdate() > 0;
         }catch(Exception e){
-
             update(gameData);
         }
 

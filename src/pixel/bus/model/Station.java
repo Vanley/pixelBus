@@ -1,7 +1,11 @@
 package pixel.bus.model;
 
+import pixel.bus.dao.DaoFactory;
+import pixel.bus.dao.IPassengerDao;
+import pixel.bus.dao.IStationDao;
 import pixel.bus.gui.GameFrame;
 import pixel.bus.model.map.Tile;
+import pixel.bus.service.GameEngineService;
 import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
 
@@ -17,6 +21,7 @@ import java.util.List;
 public class Station extends Tile {
     private String imageLocation = "/res/img/city1.png";
 
+    private int id;
     private String name = "Station ";
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
@@ -24,17 +29,21 @@ public class Station extends Tile {
     private int totalPassengersIn = 0;
     private int totalPassengersLeft = 0;
 
-    private Queue<Passenger> passengerQueue = new LinkedList<>();
+    private Queue<Passenger> passengerQueue;
     private List<Vehicle> vehicles = new ArrayList<>();
 
     public Station (int x, int y) {
         super(x, y);
-        name = name + GameLoaderFactory.getInstance()
-                .getInstance(StationService.class).getStations().size();
+        StationService stationService = GameLoaderFactory.getInstance().getInstance(StationService.class);
+        id = stationService.getStations().size();
+        name = name + id;
         this.setImage(imageLocation);
-        GameLoaderFactory.getInstance()
-                .getInstance(StationService.class).addStation(this);
+        stationService.addStation(this);
         RoadConnection.connect();
+        IStationDao stationDao = DaoFactory.getInstance(IStationDao.class);
+        IPassengerDao passengerDao = DaoFactory.getInstance(IPassengerDao.class);
+        passengerQueue = passengerDao.getAll(id, GameEngineService.tick);
+        stationDao.read(this);
     }
 
     public Queue<Passenger> getPassengerQueue() {
@@ -49,6 +58,8 @@ public class Station extends Tile {
         Passenger p = new Passenger();
         passengerQueue.add(p);
         GameFrame.addToTable(p);
+        IPassengerDao passengerDao = DaoFactory.getInstance(IPassengerDao.class);
+        passengerDao.create(p, id);
     }
 
     public void addPassengerGroup(int amount){
@@ -59,6 +70,9 @@ public class Station extends Tile {
         }
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -98,6 +112,18 @@ public class Station extends Tile {
 
     public void addTotalPassengersLeft(int totalPassengersLeft) {
         this.totalPassengersLeft += totalPassengersLeft;
+    }
+
+    public void setStationSize(int stationSize) {
+        this.stationSize = stationSize;
+    }
+
+    public void setTotalPassengersIn(int totalPassengersIn) {
+        this.totalPassengersIn = totalPassengersIn;
+    }
+
+    public void setTotalPassengersLeft(int totalPassengersLeft) {
+        this.totalPassengersLeft = totalPassengersLeft;
     }
 
     @Override
