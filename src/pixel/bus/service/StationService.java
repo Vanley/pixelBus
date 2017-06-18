@@ -2,6 +2,7 @@ package pixel.bus.service;
 
 import pixel.bus.model.Passenger;
 import pixel.bus.model.Station;
+import pixel.bus.model.Vehicle;
 import pixel.bus.model.gui.StationComboBoxModel;
 import pixel.bus.utils.RandomFromRange;
 
@@ -56,10 +57,23 @@ public class StationService {
                 }
             }
 
+//            for (Vehicle vehicle : station.getVehicles()){
+//                vehicle.addPassenger();
+//            }
+
             int passengersIn = station.getNextPassengersIn();
             int passengersAmount = station.getNextPassengersAmount();
             if (passengersIn == 0){
-                station.addPassengerGroup(passengersAmount);
+                final int threadPassengersAmount = passengersAmount; //Integers are immutable
+                Thread t = new Thread(
+                        new Runnable() {
+                            public void run () {
+                                station.addPassengerGroup(threadPassengersAmount);
+                            }
+                        }
+                );
+                t.start();
+
                 int min = 0;
                 int max = 100;
                 int integerFromRange = RandomFromRange.get(min, max);
@@ -70,7 +84,6 @@ public class StationService {
             } else {
                 passengersIn--;
             }
-
             station.setNextPassengersIn(passengersIn);
             station.setNextPassengersAmount(passengersAmount);
         }

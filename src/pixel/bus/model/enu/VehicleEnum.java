@@ -8,9 +8,9 @@ public enum VehicleEnum {
     CAR("Car", 50, 3, 100, 2, 1),
     VAN("Van", 40, 5, 300, 3, 1),
     BUS("Bus", 25, 15, 500, 5, 2),
-    LONG_BUS("Big Bus", 20, 25, 1000, 7, 2),
-    TRAM("Tram", 10, 50, 3000, 4, 1),
-    UNDERGROUND("Underground", 20, 100, 10000, 20, 20);
+    LONG_BUS("Big Bus", 20, 25, 1000, 7, 2);
+//    TRAM("Tram", 10, 50, 3000, 4, 1),
+//    UNDERGROUND("Underground", 20, 100, 10000, 20, 20);
 
     final private String name;
     final private int speed;
@@ -62,7 +62,7 @@ public enum VehicleEnum {
     }
 
     public String toString() {
-        return this.name + " Capacity:" + this.capacity + " Price:" +this.initialPrice;
+        return this.name;
     }
 
 }

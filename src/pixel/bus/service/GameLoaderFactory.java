@@ -81,13 +81,38 @@ public class GameLoaderFactory {
 
     public void unLoad() {
         gameEngineService.pause();
-        gameDataDao.create(gameData);
-        stationDao.create(stationService.getStations());
+        Thread t1 = new Thread(
+                new Runnable() {
+                    public void run () {
+                        gameDataDao.create(gameData);
+                    }
+                }
+        );
+        Thread t2 = new Thread(
+                new Runnable() {
+                    public void run () {
+                        stationDao.create(stationService.getStations());
+                    }
+                }
+        );
         //passengers saved in runtime
+
+        //todo add saving vehicles
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         gameData = null;
         gameEngineService = null;
         stationService = null;
+
     }
 
     public void injectGameFrame(GameFrame gameFrame) {

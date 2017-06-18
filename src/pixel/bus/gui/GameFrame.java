@@ -1,5 +1,6 @@
 package pixel.bus.gui;
 
+import com.sun.java.swing.action.StateChangeAction;
 import pixel.bus.gui.action_listener.ChangeSpeedAction;
 import pixel.bus.gui.renderer.CustomCellRenderer;
 import pixel.bus.gui.renderer.ProgressCellRenderer;
@@ -12,9 +13,17 @@ import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by vanley on 07/06/2017.
@@ -48,6 +57,7 @@ public class GameFrame extends JFrame {
 
     private Station currentStation;
     private PassengersOnStationTableModel passengersOnStationTableModel;
+
     private VehiclesOnStationTableModel vehiclesOnStationTableModel;
 
     public GameFrame(final GameLoaderFactory gameLoaderFactory) {
@@ -91,8 +101,7 @@ public class GameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 final JDialog dialog = new BusBuyDialog();
                 dialog.setLocationRelativeTo(null);
-                dialog.setDefaultCloseOperation(
-                        JDialog.DO_NOTHING_ON_CLOSE);
+                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
                 dialog.pack();
                 dialog.setVisible(true);
@@ -106,16 +115,19 @@ public class GameFrame extends JFrame {
         ComboBoxModel<String> comboBoxModel = stationService.getComboBoxModel();
         comboBoxStationSelect.setModel(comboBoxModel);
 
-        currentStation = stationService.getByName((String) comboBoxModel.getSelectedItem());
-
         comboBoxStationSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Station changeTo = stationService.getByName((String) comboBoxModel.getSelectedItem());
-                currentStation =  changeTo == null ? currentStation : changeTo;
-                loadStationDetails();
-                loadStationDetailsPassengersControls();
-                loadStationDetailsVehiclesControls();
+                if (changeTo != null)
+                    setCurrentStation(changeTo);
+            }
+        });
+        comboBoxStationSelect.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("model"))
+                    comboBoxStationSelect.setSelectedItem(currentStation.getName());
             }
         });
 
@@ -135,6 +147,37 @@ public class GameFrame extends JFrame {
 
         tablePassengersOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
         tablePassengersOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
+
+        final AtomicInteger selectedRow=new AtomicInteger(-1);
+        final AtomicInteger selectedCol=new AtomicInteger(-1);
+        tablePassengersOnStation.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                selectedRow.set(tablePassengersOnStation.getSelectedRow());
+                selectedCol.set(tablePassengersOnStation.getSelectedColumn());
+            }
+        });
+
+        tablePassengersOnStation.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e)
+            {
+                TableCellEditor editor=tablePassengersOnStation.getCellEditor();
+                if (editor!=null) editor.cancelCellEditing();
+
+                final int row = selectedRow.get();
+                final int col = selectedCol.get();
+                if (row < 0 || col < 0) return;
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        tablePassengersOnStation.changeSelection(row,col, false, false);
+                    }
+                });
+            }
+        });
     }
 
     private void loadStationDetailsVehiclesControls() {
@@ -143,6 +186,10 @@ public class GameFrame extends JFrame {
 
         tableVehiclesOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
         tableVehiclesOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
+    }
+
+    public VehiclesOnStationTableModel getVehiclesOnStationTableModel() {
+        return vehiclesOnStationTableModel;
     }
 
     private void loadSettingsControls() {
@@ -203,10 +250,18 @@ public class GameFrame extends JFrame {
     public void updateInfo() {
         loadStationDetails();
         passengersOnStationTableModel.fireTableDataChanged();
-        vehiclesOnStationTableModel.fireTableDataChanged();
+//        vehiclesOnStationTableModel.fireTableDataChanged();
     }
 
     public Station getCurrentStation() {
         return currentStation;
+    }
+
+    public void setCurrentStation(Station currentStation) {
+        this.currentStation = currentStation;
+        loadStationDetails();
+        loadStationDetailsPassengersControls();
+        loadStationDetailsVehiclesControls();
+        comboBoxStationSelect.setSelectedItem(currentStation.getName());
     }
 }

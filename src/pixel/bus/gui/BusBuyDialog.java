@@ -1,22 +1,22 @@
 package pixel.bus.gui;
 
-import pixel.bus.model.Station;
 import pixel.bus.model.enu.VehicleEnum;
 import pixel.bus.service.GameLoaderFactory;
-import pixel.bus.service.StationService;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
 public class BusBuyDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonBuy;
     private JButton buttonCancel;
-    private JComboBox comboBoxVehicles;
     private JLabel labelDescriptionName;
     private JLabel labelDescriptionPrice;
     private JLabel labelDescriptionCapacity;
     private JLabel labelDescriptionSpeed;
+    private JList listOfVehiclesEnum;
 
     DefaultListModel model;
     private VehicleEnum selectedVehicle;
@@ -26,23 +26,15 @@ public class BusBuyDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonBuy);
 
-        final DefaultComboBoxModel vehicleNames = new DefaultComboBoxModel();
 
-//        vehicleNames.addElement(VehicleEnum.MOTORBIKE);
-//        vehicleNames.addElement(VehicleEnum.CAR);
-        vehicleNames.addElement(VehicleEnum.VAN);
-        vehicleNames.addElement(VehicleEnum.BUS);
-        vehicleNames.addElement(VehicleEnum.LONG_BUS);
-
-        comboBoxVehicles.setModel(vehicleNames);
-        comboBoxVehicles.setSelectedIndex(0);
-        selectedVehicle = (VehicleEnum) comboBoxVehicles.getSelectedItem();
+        listOfVehiclesEnum.setListData(VehicleEnum.values());
+        VehicleEnum selectedVehicleEnum = (VehicleEnum) listOfVehiclesEnum.getSelectedValue();
+        listOfVehiclesEnum.setSelectedIndex(0);
         updateLabels();
 
-        comboBoxVehicles.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                selectedVehicle = (VehicleEnum) comboBoxVehicles.getSelectedItem();
+        listOfVehiclesEnum.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
                 updateLabels();
             }
         });
@@ -74,15 +66,11 @@ public class BusBuyDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        comboBoxVehicles.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
     }
 
     private void updateLabels() {
+        selectedVehicle = (VehicleEnum) listOfVehiclesEnum.getSelectedValue();
         labelDescriptionName.setText("Type: " + selectedVehicle.getName());
         labelDescriptionPrice.setText("Price: " + selectedVehicle.getInitialPrice() + "$");
         labelDescriptionCapacity.setText("Capacity: " + selectedVehicle.getCapacity() + " people");
@@ -92,6 +80,7 @@ public class BusBuyDialog extends JDialog {
     private void onBuy() {
         // add your code here
         GameLoaderFactory.getInstance().getInstance(GameFrame.class).getCurrentStation().addVehicle(selectedVehicle);
+        GameLoaderFactory.getInstance().getInstance(GameFrame.class).getVehiclesOnStationTableModel().fireTableDataChanged();
         dispose();
     }
 

@@ -57,7 +57,7 @@ public class IStationDaoImpl implements IStationDao {
             stmt.setInt(3, station.getNextPassengersIn());
             stmt.setInt(4, station.getNextPassengersAmount());
             stmt.setInt(5, station.getStationSize());
-            stmt.setInt(6, station.getTotalPassengersIn());
+            stmt.setInt(6, station.getTotalPassengersIn().get());
             stmt.setInt(7, station.getTotalPassengersLeft());
 
             return stmt.executeUpdate() > 0;
@@ -85,7 +85,7 @@ public class IStationDaoImpl implements IStationDao {
             stmt.setInt(2, station.getNextPassengersIn());
             stmt.setInt(3, station.getNextPassengersAmount());
             stmt.setInt(4, station.getStationSize());
-            stmt.setInt(5, station.getTotalPassengersIn());
+            stmt.setInt(5, station.getTotalPassengersIn().get());
             stmt.setInt(6, station.getTotalPassengersLeft());
             stmt.setInt(7, station.getId());
 

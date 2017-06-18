@@ -71,15 +71,18 @@ public class ActionLogDialog extends JDialog {
     }
 
     private void onRefresh() {
-        // add your code here
-        passengerList.removeAll(passengerList);
-        passengerList.addAll(passengerDao.getAll());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                passengerList.removeAll(passengerList);
+                passengerList.addAll(passengerDao.getAll());
 
-        pmodel.fireTableDataChanged();
+                pmodel.fireTableDataChanged();
+            }
+        });
     }
 
     private void onClose() {
-        // add your code here if necessary
         dispose();
     }
 

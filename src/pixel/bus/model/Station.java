@@ -11,6 +11,7 @@ import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
 import pixel.bus.utils.RandomFromRange;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,11 +19,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by vanley on 21/05/2017.
  */
-public class Station extends Tile{
+public class Station extends Tile {
     private static String imageLocation = "/res/img/city/city0.png";
     private static String[] imageLocations = new String[]{
             "/res/img/city/city1.png",
@@ -40,10 +43,10 @@ public class Station extends Tile{
     private int nextPassengersIn = 0;
     private int nextPassengersAmount = 0;
     private int stationSize = 0;
-    private int totalPassengersIn = 0;
+    private AtomicInteger totalPassengersIn = new AtomicInteger(0);
     private int totalPassengersLeft = 0;
 
-    private Queue<Passenger> passengerQueue;
+    private Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
     private List<Vehicle> vehicles = new ArrayList<>();
 
     public Station (int x, int y) {
@@ -79,7 +82,7 @@ public class Station extends Tile{
         while (amount > 0){
             addPassenger();
             amount--;
-            totalPassengersIn++;
+            totalPassengersIn.getAndIncrement();
         }
     }
 
@@ -122,7 +125,7 @@ public class Station extends Tile{
         return stationSize;
     }
 
-    public int getTotalPassengersIn() {
+    public AtomicInteger getTotalPassengersIn() {
         return totalPassengersIn;
     }
 
@@ -138,8 +141,11 @@ public class Station extends Tile{
         this.stationSize = stationSize;
     }
 
-    public void setTotalPassengersIn(int totalPassengersIn) {
+    public void setTotalPassengersIn(AtomicInteger totalPassengersIn) {
         this.totalPassengersIn = totalPassengersIn;
+    }
+    public void setTotalPassengersIn(int totalPassengersIn) {
+        this.totalPassengersIn.set(totalPassengersIn);
     }
 
     public void setTotalPassengersLeft(int totalPassengersLeft) {
@@ -156,7 +162,7 @@ public class Station extends Tile{
 
     private void animateBuilding(Graphics g) {
         if (next == 0) {
-            this.setImage(imageLocations[RandomFromRange.get(0, 8)]);
+            this.setImage(imageLocations[RandomFromRange.get(0, imageLocations.length-1)]);
             //sequential
 //            this.setImage(imageLocations[current]);
 //            current++;

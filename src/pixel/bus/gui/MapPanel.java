@@ -8,10 +8,8 @@ import pixel.bus.service.StationService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 
 /**
@@ -21,6 +19,10 @@ public class MapPanel extends JPanel implements ActionListener {
     private static int DELAY = 1000/10;
     private static Timer timer;
 
+    private boolean isMouseHere = false;
+    private Point mousePoint;
+    private String mouseOverEntity;
+
     private City city;
 
     public MapPanel(City city) {
@@ -29,6 +31,54 @@ public class MapPanel extends JPanel implements ActionListener {
 
         timer = new Timer(DELAY, this);
         timer.start();
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                System.out.println(e);
+                Point p = e.getPoint();
+                int px = (int) (p.getX() - (p.getX() % 32));
+                int py = (int) (p.getY() - (p.getY() % 32));
+
+                for(Tile s : city.getTiles()) {
+                    if (s.getX() == px && s.getY() == py){
+                        mouseOverEntity = s.getClass().getSimpleName();
+                        if (s instanceof Station) {
+                            GameFrame gf = GameLoaderFactory.getInstance().getInstance(GameFrame.class);
+                            if (!gf.getCurrentStation().equals(s)) {
+                                gf.setCurrentStation((Station) s);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                isMouseHere = true;
+                mouseOverEntity = "Select Station or click on tile to read class name.";
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                isMouseHere = false;
+            }
+
+        });
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                mousePoint = e.getPoint();
+            }
+        });
     }
 
     @Override
@@ -38,6 +88,35 @@ public class MapPanel extends JPanel implements ActionListener {
         paintRoads(g);
         paintCityForeGround(g);
         paintStatistic(g);
+        if (isMouseHere) {
+            paintMouse(g);
+        }
+    }
+
+    private void paintMouse(Graphics g) {
+        g.setColor(new Color(0, 0, 0, 30));
+        g.fillRect(
+                (int) (mousePoint.getX() - (mousePoint.getX() % 32)),
+                (int) (mousePoint.getY() - (mousePoint.getY() % 32)),
+                32,32);
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(new Color(18, 169, 180, 70));
+        Area shape = new Area(
+                new Rectangle(
+                        (int) (mousePoint.getX() - (mousePoint.getX() % 32)),
+                        (int) (mousePoint.getY() - (mousePoint.getY() % 32)),
+                        32,32)
+        );
+        shape.subtract(new Area(
+                new Rectangle(
+                        (int) (mousePoint.getX() - (mousePoint.getX() % 32) + 3),
+                        (int) (mousePoint.getY() - (mousePoint.getY() % 32) + 3),
+                        32 - 6,32 - 6)
+        ));
+        g2d.fill(shape);
+        g.setColor(new Color(0, 0, 0));
+        g.drawString(mouseOverEntity, 25, this.getHeight() -15);
     }
 
     private void paintStatistic(Graphics g) {
