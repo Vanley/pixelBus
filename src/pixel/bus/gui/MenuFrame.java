@@ -1,5 +1,6 @@
 package pixel.bus.gui;
 
+import pixel.bus.gui.component.MenuBusPanel;
 import pixel.bus.model.CityLevel;
 import pixel.bus.service.GameLoaderFactory;
 

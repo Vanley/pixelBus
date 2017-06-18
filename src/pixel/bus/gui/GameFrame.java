@@ -1,9 +1,12 @@
 package pixel.bus.gui;
 
-import com.sun.java.swing.action.StateChangeAction;
 import pixel.bus.gui.action_listener.ChangeSpeedAction;
+import pixel.bus.gui.component.MapPanel;
+import pixel.bus.gui.dialog.ActionLogDialog;
+import pixel.bus.gui.dialog.BusBuyDialog;
 import pixel.bus.gui.renderer.CustomCellRenderer;
 import pixel.bus.gui.renderer.ProgressCellRenderer;
+import pixel.bus.gui.renderer.VehicleProgressCellRenderer;
 import pixel.bus.model.*;
 import pixel.bus.model.enu.GameSpeedEnum;
 import pixel.bus.model.gui.PassengersOnStationTableModel;
@@ -184,8 +187,9 @@ public class GameFrame extends JFrame {
         vehiclesOnStationTableModel = new VehiclesOnStationTableModel(currentStation.getVehicles());
         tableVehiclesOnStation.setModel(vehiclesOnStationTableModel);
 
-        tableVehiclesOnStation.setDefaultRenderer(Integer.class, new ProgressCellRenderer());
+        tableVehiclesOnStation.setDefaultRenderer(Vehicle.class, new VehicleProgressCellRenderer());
         tableVehiclesOnStation.setDefaultRenderer(String.class, new CustomCellRenderer());
+        tableVehiclesOnStation.setDefaultRenderer(Integer.class, new CustomCellRenderer());
     }
 
     public VehiclesOnStationTableModel getVehiclesOnStationTableModel() {
@@ -249,7 +253,9 @@ public class GameFrame extends JFrame {
 
     public void updateInfo() {
         loadStationDetails();
-        passengersOnStationTableModel.fireTableDataChanged();
+//        passengersOnStationTableModel.fireTableDataChanged();
+        passengersOnStationTableModel.fireTableRowsInserted(0, passengersOnStationTableModel.getRowCount());
+
 //        vehiclesOnStationTableModel.fireTableDataChanged();
     }
 
@@ -264,4 +270,6 @@ public class GameFrame extends JFrame {
         loadStationDetailsVehiclesControls();
         comboBoxStationSelect.setSelectedItem(currentStation.getName());
     }
+
+
 }

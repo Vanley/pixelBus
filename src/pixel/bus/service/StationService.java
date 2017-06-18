@@ -1,5 +1,6 @@
 package pixel.bus.service;
 
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.Passenger;
 import pixel.bus.model.Station;
 import pixel.bus.model.Vehicle;
@@ -57,9 +58,11 @@ public class StationService {
                 }
             }
 
-//            for (Vehicle vehicle : station.getVehicles()){
-//                vehicle.addPassenger();
-//            }
+            for (Vehicle vehicle : station.getVehicles()){
+                vehicle.setCapacityEstimation(vehicle.getCapacity() < station.getPassengerQueue().size() ? vehicle.getCapacity() : station.getPassengerQueue().size());
+                GameLoaderFactory.getInstance().getInstance(GameFrame.class).getVehiclesOnStationTableModel().updateVehicleEstimatedCapacity(vehicle);
+
+            }
 
             int passengersIn = station.getNextPassengersIn();
             int passengersAmount = station.getNextPassengersAmount();

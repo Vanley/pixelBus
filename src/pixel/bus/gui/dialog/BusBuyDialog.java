@@ -1,5 +1,6 @@
-package pixel.bus.gui;
+package pixel.bus.gui.dialog;
 
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.enu.VehicleEnum;
 import pixel.bus.service.GameLoaderFactory;
 

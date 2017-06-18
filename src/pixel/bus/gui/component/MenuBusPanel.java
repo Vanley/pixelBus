@@ -1,4 +1,4 @@
-package pixel.bus.gui;
+package pixel.bus.gui.component;
 
 import javax.swing.*;
 import java.awt.*;

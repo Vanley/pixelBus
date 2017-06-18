@@ -1,5 +1,6 @@
-package pixel.bus.gui;
+package pixel.bus.gui.component;
 
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.*;
 import pixel.bus.model.map.Tile;
 import pixel.bus.service.GameEngineService;
@@ -36,7 +37,6 @@ public class MapPanel extends JPanel implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                System.out.println(e);
                 Point p = e.getPoint();
                 int px = (int) (p.getX() - (p.getX() % 32));
                 int py = (int) (p.getY() - (p.getY() % 32));

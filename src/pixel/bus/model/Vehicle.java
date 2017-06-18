@@ -8,6 +8,7 @@ import pixel.bus.model.enu.VehicleEnum;
 public class Vehicle {
     private String name;
     private int capacityCurrent = 0;
+    private int capacityEstimation = 0;
 
     final private VehicleEnum type;
     final private int capacity;
@@ -61,5 +62,13 @@ public class Vehicle {
 
     public int getStandingCost() {
         return standingCost;
+    }
+
+    public int getCapacityEstimation() {
+        return capacityEstimation;
+    }
+
+    public void setCapacityEstimation(int capacityEstimation) {
+        this.capacityEstimation = capacityEstimation;
     }
 }

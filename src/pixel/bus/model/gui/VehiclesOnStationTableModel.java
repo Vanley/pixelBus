@@ -1,6 +1,8 @@
 package pixel.bus.model.gui;
 
+import pixel.bus.gui.GameFrame;
 import pixel.bus.model.Vehicle;
+import pixel.bus.service.GameLoaderFactory;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -14,13 +16,13 @@ public class VehiclesOnStationTableModel extends AbstractTableModel {
 
     private final String[] columnNames = new String[]{
             "Name",
-            "Capacity",
             "Speed",
-            "Current capacity"
+            "Capacity",
+            "Estimate"
     };
 
     private final Class[] columnClass = new Class[]{
-            String.class, String.class, String.class, Integer.class
+            String.class, Integer.class, Integer.class, Vehicle.class
     };
 
     public VehiclesOnStationTableModel(List<Vehicle> vehicleList) {
@@ -53,12 +55,19 @@ public class VehiclesOnStationTableModel extends AbstractTableModel {
         if (0 == columnIndex) {
             return row.getName();
         } else if (1 == columnIndex) {
-            return "" + row.getCapacity();
+            return row.getSpeed();
         } else if (2 == columnIndex) {
-            return "" + row.getSpeed();
+            return row.getCapacity();
         } else if (3 == columnIndex) {
-            return row.getCapacityCurrent() * 100 / row.getCapacity(); //vehicle capacity(0-40) to bar capacity 0-100
+//            return (row.getCapacityEstimation() * 100 / row.getCapacity()); //estimate
+            return row; //estimate
+//            return (row.getCapacityCurrent() * 100 / row.getCapacity()); //vehicle capacity(0-40) to bar capacity 0-100
         }
         return null;
+    }
+
+    public void updateVehicleEstimatedCapacity(Vehicle v){
+        int row = vehicleList.indexOf(v);
+        this.fireTableCellUpdated(row, 3);
     }
 }

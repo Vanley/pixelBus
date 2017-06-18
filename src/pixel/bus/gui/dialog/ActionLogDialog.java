@@ -1,4 +1,4 @@
-package pixel.bus.gui;
+package pixel.bus.gui.dialog;
 
 import pixel.bus.dao.DaoFactory;
 import pixel.bus.dao.IPassengerDao;
