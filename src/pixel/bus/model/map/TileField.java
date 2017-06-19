@@ -15,6 +15,6 @@ public class TileField extends Tile {
 
     @Override
     public void animate(Graphics g) {
-
+        //animation of tile itself, example Station class
     }
 }

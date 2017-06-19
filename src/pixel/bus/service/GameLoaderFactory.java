@@ -62,10 +62,7 @@ public class GameLoaderFactory {
         gameData = gameDataDao.read();
         gameEngineService = new GameEngineService(gameData);
         stationService = new StationService();
-
 //        gameService = new GameService();
-
-        //TODO load from DB
 
     }
 

@@ -50,7 +50,7 @@ public class MenuFrame {
         gameFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         gameFrame.setTitle("PIXEL BUS The Game");
         gameFrame.pack();
-//        gameFrame.setLocationRelativeTo(null);
+//        gameFrame.setLocationRelativeTo(null); // not reliable on multiscreen
 //        gameFrame.setMinimumSize(new Dimension(200, 220));
         centreWindow(gameFrame);
         gameFrame.setVisible(true);

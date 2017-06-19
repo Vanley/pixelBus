@@ -1,8 +1,6 @@
 package pixel.bus.model.gui;
 
-import pixel.bus.gui.GameFrame;
 import pixel.bus.model.Vehicle;
-import pixel.bus.service.GameLoaderFactory;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -59,9 +57,7 @@ public class VehiclesOnStationTableModel extends AbstractTableModel {
         } else if (2 == columnIndex) {
             return row.getCapacity();
         } else if (3 == columnIndex) {
-//            return (row.getCapacityEstimation() * 100 / row.getCapacity()); //estimate
-            return row; //estimate
-//            return (row.getCapacityCurrent() * 100 / row.getCapacity()); //vehicle capacity(0-40) to bar capacity 0-100
+            return row;
         }
         return null;
     }

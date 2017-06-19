@@ -11,10 +11,7 @@ import pixel.bus.service.GameLoaderFactory;
 import pixel.bus.service.StationService;
 import pixel.bus.utils.RandomFromRange;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;

@@ -255,7 +255,6 @@ public class GameFrame extends JFrame {
         loadStationDetails();
 //        passengersOnStationTableModel.fireTableDataChanged();
         passengersOnStationTableModel.fireTableRowsInserted(0, passengersOnStationTableModel.getRowCount());
-
 //        vehiclesOnStationTableModel.fireTableDataChanged();
     }
 
