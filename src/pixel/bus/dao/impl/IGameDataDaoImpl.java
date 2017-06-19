@@ -6,6 +6,7 @@ import pixel.bus.model.GameData;
 import pixel.bus.model.enu.GameSpeedEnum;
 import pixel.bus.service.GameEngineService;
 import pixel.bus.utils.DerbyConnectionUtility;
+import pixel.bus.utils.DerbyTableUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,8 @@ public class IGameDataDaoImpl implements IGameDataDao {
                 return gameData;
             }
         }catch(Exception e){
-            e.printStackTrace();
+            DerbyTableUtility.cleanAll();
+            System.out.println("Database Created.");
         }
 
         return null;
